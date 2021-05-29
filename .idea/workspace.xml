@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2187793b-e64d-48fa-93dc-77d9c32a3738" name="Default" comment="Customer Controller and setting up exception handlers.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-api/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+    <list default="true" id="2187793b-e64d-48fa-93dc-77d9c32a3738" name="Default" comment="Added basic end to end flow for adding customer">
+      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-api/src/main/java/com/upgrad/FoodOrderingApp/api/controller/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-api/src/main/java/com/upgrad/FoodOrderingApp/api/controller/CustomerController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -416,7 +414,7 @@
       <workItem from="1622275697816" duration="865000" />
       <workItem from="1622276667223" duration="1052000" />
       <workItem from="1622277938777" duration="393000" />
-      <workItem from="1622278558442" duration="6608000" />
+      <workItem from="1622278558442" duration="6920000" />
     </task>
     <task id="LOCAL-00001" summary="Updated config and edits">
       <created>1622278092936</created>
@@ -432,7 +430,21 @@
       <option name="project" value="LOCAL" />
       <updated>1622281239797</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Added Validator capabilities">
+      <created>1622285602942</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1622285602942</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Added basic end to end flow for adding customer">
+      <created>1622285658728</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1622285658728</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -560,7 +572,9 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Updated config and edits" />
     <MESSAGE value="Customer Controller and setting up exception handlers." />
-    <option name="LAST_COMMIT_MESSAGE" value="Customer Controller and setting up exception handlers." />
+    <MESSAGE value="Added Validator capabilities" />
+    <MESSAGE value="Added basic end to end flow for adding customer" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added basic end to end flow for adding customer" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/entity/StateEntity.java" />
