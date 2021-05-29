@@ -56,7 +56,7 @@ public class CustomerController {
         customerEntity.setPassword(signupUserRequest.getPassword());
         customerEntity.setSalt("1234abc");
         customerEntity.setContactNumber(signupUserRequest.getContactNumber());
-        final CustomerEntity createdUserEntity = customerService.signup(customerEntity);
+        final CustomerEntity createdUserEntity = customerService.saveCustomer(customerEntity);
         SignupCustomerResponse userResponse = new SignupCustomerResponse().id(createdUserEntity.getUuid()).status("CUSTOMER SUCCESSFULLY REGISTERED");
         return new ResponseEntity<>(userResponse, HttpStatus.CREATED);
     }
