@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class CustomerBusinessService {
+public class CustomerService {
     @Autowired
     private CustomerDAO customerDAO;
 
