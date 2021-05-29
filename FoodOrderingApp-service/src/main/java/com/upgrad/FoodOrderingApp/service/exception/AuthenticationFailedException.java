@@ -1,5 +1,7 @@
 package com.upgrad.FoodOrderingApp.service.exception;
 
+import org.springframework.http.HttpStatus;
+
 import java.io.PrintStream;
 import java.io.PrintWriter;
 
@@ -38,5 +40,12 @@ public class AuthenticationFailedException extends Exception {
         return errorMessage;
     }
 
+    public HttpStatus getHttpCode() {
+        switch(code) {
+            case "ATH-001" : return HttpStatus.UNAUTHORIZED;
+            case "ATH-002" : return HttpStatus.UNAUTHORIZED;
+        }
+        return HttpStatus.NOT_FOUND;
+    }
 }
 
