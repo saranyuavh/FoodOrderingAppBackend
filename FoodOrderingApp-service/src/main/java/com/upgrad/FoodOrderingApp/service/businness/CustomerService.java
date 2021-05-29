@@ -75,4 +75,13 @@ public class CustomerService {
         return customerDAO.getUserByContact(contact) != null;
     }
 
+    public CustomerAuthEntity getCustomerAccessToken(String authorization) {
+        CustomerAuthEntity authEntity =  customerDAO.getCustomerAuthToken(authorization);
+        return authEntity;
+    }
+
+    public CustomerEntity updateCustomer(CustomerEntity customerEntity) {
+        customerDAO.updateUser(customerEntity);
+        return customerEntity;
+    }
 }
