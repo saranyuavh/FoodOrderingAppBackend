@@ -36,6 +36,19 @@ public class CustomerController {
         if(violations.size()>0) {
             throw new SignUpRestrictedException("SGR-005","Except last name all fields should be filled");
         }
+        String regex = "^[a-zA-Z0-9]+@([a-zA-Z0-9]+\\.)+[a-zA-Z0-9]+$";
+        if (!signupUserRequest.getEmailAddress().matches(regex)){
+            throw new SignUpRestrictedException("SGR-002","Invalid email-id format!");
+        }
+        regex="^\\d{10}$";
+        if (!signupUserRequest.getContactNumber().matches(regex)){
+            throw new SignUpRestrictedException("SGR-003","Invalid contact number!");
+        }
+        regex ="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[\\\\[#@$%&*!^\\\\] –[{}]:;',?/*~$^+=<>]).{8,20}$";
+        if (!signupUserRequest.getPassword().matches(regex)){
+            throw new SignUpRestrictedException("SGR-003","Invalid contact number!");
+        }
+
         final CustomerEntity customerEntity = new CustomerEntity();
         customerEntity.setUuid(UUID.randomUUID().toString());
         customerEntity.setFirstName(signupUserRequest.getFirstName());
