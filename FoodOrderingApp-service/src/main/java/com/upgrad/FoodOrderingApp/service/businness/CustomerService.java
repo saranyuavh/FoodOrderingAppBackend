@@ -1,12 +1,17 @@
 package com.upgrad.FoodOrderingApp.service.businness;
 
 import com.upgrad.FoodOrderingApp.service.dao.CustomerDAO;
+import com.upgrad.FoodOrderingApp.service.entity.CustomerAuthEntity;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
+import com.upgrad.FoodOrderingApp.service.exception.AuthenticationFailedException;
 import com.upgrad.FoodOrderingApp.service.exception.SignUpRestrictedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.ZonedDateTime;
+import java.util.UUID;
 
 @Service
 public class CustomerService {
@@ -35,6 +40,27 @@ public class CustomerService {
         customerEntity.setSalt(encryptedText[0]);
         customerEntity.setPassword(encryptedText[1]);
         return customerDAO.createCustomer(customerEntity);
+
+    }
+
+    public CustomerAuthEntity authenticate(String contact, String password) throws AuthenticationFailedException {
+        CustomerEntity customerEntity = customerDAO.getUserByContact(contact);
+        final String encryptedPassword = cryptographyProvider.encrypt(password, customerEntity.getSalt());
+        if (encryptedPassword.equals(customerEntity.getPassword())) {
+            JwtTokenProvider jwtTokenProvider = new JwtTokenProvider(encryptedPassword);
+            CustomerAuthEntity customerAuthEntity = new CustomerAuthEntity();
+            customerAuthEntity.setCustomer(customerEntity);
+            final ZonedDateTime now = ZonedDateTime.now();
+            final ZonedDateTime expiresAt = now.plusHours(8);
+            customerAuthEntity.setAccessToken(jwtTokenProvider.generateToken(customerEntity.getUuid(), now, expiresAt));
+            customerAuthEntity.setLoginAt(now);
+            customerAuthEntity.setExpiresAt(expiresAt);
+            customerAuthEntity.setUuid(UUID.randomUUID().toString());
+            customerDAO.createAuthToken(customerAuthEntity);
+            return customerAuthEntity;
+        } else {
+            throw new AuthenticationFailedException("ATH-002", "Invalid Credentials");
+        }
 
     }
 
