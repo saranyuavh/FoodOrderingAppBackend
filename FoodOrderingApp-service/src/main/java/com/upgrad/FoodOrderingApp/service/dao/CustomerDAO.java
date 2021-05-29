@@ -58,4 +58,13 @@ public class CustomerDAO {
         entityManager.persist(customerAuthEntity);
         return customerAuthEntity;
     }
+
+    public CustomerAuthEntity getCustomerAuthToken(String authorization) {
+        try {
+            return entityManager.createNamedQuery("userAuthTokenByAccessToken", CustomerAuthEntity.class).setParameter("accessToken", authorization).getSingleResult();
+        } catch (NoResultException nre) {
+
+            return null;
+        }
+    }
 }

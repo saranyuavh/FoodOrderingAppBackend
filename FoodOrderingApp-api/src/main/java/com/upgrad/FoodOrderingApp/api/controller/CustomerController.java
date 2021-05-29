@@ -1,9 +1,7 @@
 package com.upgrad.FoodOrderingApp.api.controller;
 
 
-import com.upgrad.FoodOrderingApp.api.model.LoginResponse;
-import com.upgrad.FoodOrderingApp.api.model.SignupCustomerRequest;
-import com.upgrad.FoodOrderingApp.api.model.SignupCustomerResponse;
+import com.upgrad.FoodOrderingApp.api.model.*;
 import com.upgrad.FoodOrderingApp.service.businness.CustomerService;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerAuthEntity;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
@@ -20,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
+import java.time.ZonedDateTime;
 import java.util.Base64;
 import java.util.Set;
 import java.util.UUID;
@@ -108,4 +107,42 @@ public class CustomerController {
         headers.add("access-token", customerAuthEntity.getAccessToken());
         return new ResponseEntity<LoginResponse>(authorizedUserResponse, headers, HttpStatus.OK);
     }
+
+    @RequestMapping(method = RequestMethod.POST, path = "/logout", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<LogoutResponse> logout(@RequestHeader("authorization") final String authorization) throws AuthorizationFailedException {
+
+        CustomerAuthEntity authEntity = customerService.getCustomerAccessToken(authorization);
+        if (authEntity == null ){
+            throw new AuthorizationFailedException("ATHR-001", "Customer is not Logged in.");
+        }
+        final CustomerEntity userEntity = authEntity.getCustomer();
+        if (authEntity.getLogoutAt().isBefore(ZonedDateTime.now())){
+            throw new AuthorizationFailedException("ATHR-002", "Customer is logged out. Log in again to access this endpoint.");
+        }
+
+        if(authEntity.getExpiresAt().isBefore(ZonedDateTime.now())){
+            throw new AuthorizationFailedException("ATHR-003", "Your session is expired. Log in again to access this endpoint.");
+        }
+
+        LogoutResponse signoutResponse = new LogoutResponse().id(userEntity.getUuid()).message("LOGGED OUT SUCCESSFULLY");
+
+        return new ResponseEntity<LogoutResponse>(signoutResponse, HttpStatus.OK);
+    }
+
+
+    @RequestMapping(method = RequestMethod.PUT, path = "/", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<UpdateCustomerResponse> updateCustomer(@RequestHeader("authorization") final String authorization,final UpdateCustomerRequest updateCustomerRequest) throws SignUpRestrictedException {
+
+        //Lets do some validations
+        if(updateCustomerRequest.getFirstName().isEmpty()){
+
+        }
+        CustomerEntity customerEntity =  customerService.getCustomerAccessToken(authorization).getCustomer();
+        customerEntity.setFirstName(updateCustomerRequest.getFirstName());
+        customerEntity.setLastName(updateCustomerRequest.getLastName());
+        final CustomerEntity createdUserEntity = customerService.updateCustomer(customerEntity);
+        UpdateCustomerResponse userResponse = new UpdateCustomerResponse().id(createdUserEntity.getUuid()).status("CUSTOMER SUCCESSFULLY UPDATED");
+        return new ResponseEntity<>(userResponse, HttpStatus.CREATED);
+    }
+
 }
