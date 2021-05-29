@@ -1,0 +1,56 @@
+package com.upgrad.FoodOrderingApp.service.dao;
+
+import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
+import org.springframework.stereotype.Repository;
+
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
+
+@Repository
+public class CustomerDAO {
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    public CustomerEntity createCustomer(CustomerEntity customerEntity) {
+        entityManager.persist(customerEntity);
+        return customerEntity;
+    }
+
+    public CustomerEntity getUser(final String userUuid) {
+        try {
+            return entityManager.createNamedQuery("userByUuid", CustomerEntity.class).setParameter("uuid", userUuid)
+                    .getSingleResult();
+        } catch (NoResultException nre) {
+            return null;
+        }
+    }
+
+    public CustomerEntity getUserByContact(final String contact) {
+        try {
+            return entityManager.createNamedQuery("userByContact", CustomerEntity.class).setParameter("contactNumber", contact).getSingleResult();
+        } catch (NoResultException nre) {
+            return null;
+        }
+    }
+
+    public CustomerEntity getUserByEmail(final String email) {
+        try {
+            return entityManager.createNamedQuery("userByEmail", CustomerEntity.class).setParameter("email", email).getSingleResult();
+        } catch (NoResultException nre) {
+            return null;
+        }
+    }
+
+    public void updateUser(final CustomerEntity updatedUserEntity) {
+        entityManager.merge(updatedUserEntity);
+    }
+
+    public String deleteUser(CustomerEntity delUser) {
+        String uuid = delUser.getUuid();
+        entityManager.remove(delUser);
+        return uuid;
+    }
+
+
+}
