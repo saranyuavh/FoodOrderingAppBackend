@@ -17,7 +17,7 @@ public class CustomerService {
     private PasswordCryptographyProvider cryptographyProvider;
 
 
-    public CustomerEntity signup(final CustomerEntity customerEntity) throws SignUpRestrictedException {
+    public CustomerEntity saveCustomer(final CustomerEntity customerEntity) throws SignUpRestrictedException {
         if (this.contactExists(customerEntity.getContactNumber())) {
             throw new SignUpRestrictedException("SGR-001","This contact number is already registered! Try other contact number.");
         }
