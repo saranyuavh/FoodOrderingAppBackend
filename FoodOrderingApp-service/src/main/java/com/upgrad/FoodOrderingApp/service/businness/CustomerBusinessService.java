@@ -31,10 +31,6 @@ public class CustomerBusinessService {
     @Transactional(propagation = Propagation.REQUIRED)
     public CustomerEntity createUser(final CustomerEntity customerEntity) {
 
-        String password = customerEntity.getPassword();
-        if (password == null) {
-            customerEntity.setPassword("proman@123");
-        }
         String[] encryptedText = cryptographyProvider.encrypt(customerEntity.getPassword());
         customerEntity.setSalt(encryptedText[0]);
         customerEntity.setPassword(encryptedText[1]);

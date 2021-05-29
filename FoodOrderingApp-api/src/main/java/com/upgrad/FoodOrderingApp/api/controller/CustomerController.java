@@ -58,7 +58,7 @@ public class CustomerController {
         customerEntity.setSalt("1234abc");
         customerEntity.setContactNumber(signupUserRequest.getContactNumber());
         final CustomerEntity createdUserEntity = customerBusinessService.signup(customerEntity);
-        SignupCustomerResponse userResponse = new SignupCustomerResponse().id(createdUserEntity.getUuid()).status("USER SUCCESSFULLY REGISTERED");
-        return new ResponseEntity<SignupCustomerResponse>(userResponse, HttpStatus.CREATED);
+        SignupCustomerResponse userResponse = new SignupCustomerResponse().id(createdUserEntity.getUuid()).status("CUSTOMER SUCCESSFULLY REGISTERED");
+        return new ResponseEntity<>(userResponse, HttpStatus.CREATED);
     }
 }
