@@ -13,4 +13,9 @@ public class RestaurantService {
     public List<RestaurantEntity> getAllRestaurants() {
         return restaurantDao.getAllRestaurants();
     }
+
+    public List<RestaurantEntity> getRestaurantsByName(String restaurant_name) {
+        return restaurantDao.getRestaurantsByName(restaurant_name);
+    }
+
 }
