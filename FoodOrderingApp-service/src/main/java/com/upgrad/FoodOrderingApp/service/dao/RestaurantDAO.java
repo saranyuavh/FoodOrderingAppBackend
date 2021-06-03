@@ -1,5 +1,6 @@
 package com.upgrad.FoodOrderingApp.service.dao;
 
+import com.upgrad.FoodOrderingApp.service.entity.RestaurantCategoryEntity;
 import com.upgrad.FoodOrderingApp.service.entity.RestaurantEntity;
 
 import javax.persistence.EntityManager;
@@ -26,5 +27,25 @@ public class RestaurantDAO {
         } catch(NoResultException nre) {
             return null;
         }
+    }
+
+    public List<RestaurantCategoryEntity> getRestaurantByCategoryId(final Long categoryID) {
+        try {
+            return entityManager.createNamedQuery("restaurantsByCategoryId", RestaurantCategoryEntity.class).setParameter("id",categoryID).getResultList();
+        } catch(NoResultException nre) {
+            return null;
+        }
+    }
+
+    public RestaurantEntity getRestaurantByUUId(String restaurantUUID) {
+        try {
+            return entityManager.createNamedQuery("findRestaurantByUUId", RestaurantEntity.class).setParameter("restaurantUUID",restaurantUUID.toLowerCase()).getSingleResult();
+        } catch(NoResultException nre) {
+            return null;
+        }
+    }
+
+    public void updateRestaurant(final RestaurantEntity updatedRestaurantEntity) {
+        entityManager.merge(updatedRestaurantEntity);
     }
 }
