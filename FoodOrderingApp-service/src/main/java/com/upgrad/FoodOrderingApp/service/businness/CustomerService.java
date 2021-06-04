@@ -123,4 +123,7 @@ public class CustomerService {
         return customerDAO.updateUser(customerEntity);
     }
 
+    public CustomerEntity getCustomer(String accessToken) {
+        return this.getCustomerAccessToken(accessToken).getCustomer();
+    }
 }
