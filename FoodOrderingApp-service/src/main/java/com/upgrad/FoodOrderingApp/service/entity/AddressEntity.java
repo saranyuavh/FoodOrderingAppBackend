@@ -1,12 +1,15 @@
 package com.upgrad.FoodOrderingApp.service.entity;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
@@ -14,16 +17,18 @@ import java.io.Serializable;
 @Table(name = "address")
 @NamedQueries(
         {
-                @NamedQuery(name = "userByUuid", query = "select u from CustomerEntity u where u.uuid = :uuid"),
-                @NamedQuery(name = "userByEmail", query = "select u from CustomerEntity u where u.email =:email"),
-                @NamedQuery(name = "userByContact", query = "select u from CustomerEntity u where u.contactNumber =:contactNumber")
+                @NamedQuery(name = "addressByUuid", query = "select a from AddressEntity a where a.uuid =:uuid"),
+                @NamedQuery(name = "allAddresses", query = "select a from AddressEntity a "),
+                @NamedQuery(name = "addressById", query = "select a from AddressEntity a where a.id=:id")
         }
 )
+
 public class AddressEntity implements Serializable {
+
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private long id;
 
     @Column(name = "UUID")
     @Size(max = 200)
@@ -31,7 +36,7 @@ public class AddressEntity implements Serializable {
 
     @Column(name = "FLAT_BUIL_NUMBER")
     @Size(max = 255)
-    private String flatBuilNumber;
+    private String flatBuildingNumber;
 
     @Column(name = "LOCALITY")
     @Size(max = 255)
@@ -45,8 +50,21 @@ public class AddressEntity implements Serializable {
     @Size(max = 30)
     private String pincode;
 
+    @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "STATE_ID")
+    private StateEntity state;
+
+    @Column(name = "active")
+    private Integer active;
+
+    public Long getId() {
+        return id;
+    }
+
     @OneToOne
     @JoinColumn(name = "STATE_ID")
+    
     private StateEntity state;
 
     public Integer getId() {
@@ -65,12 +83,12 @@ public class AddressEntity implements Serializable {
         this.uuid = uuid;
     }
 
-    public String getFlatBuilNumber() {
-        return flatBuilNumber;
+    public String getFlatBuildingNumber() {
+        return flatBuildingNumber;
     }
 
-    public void setFlatBuilNumber(String flat_buil_number) {
-        this.flatBuilNumber = flat_buil_number;
+    public void setFlatBuildingNumber(String flatBuildingNumber) {
+        this.flatBuildingNumber = flatBuildingNumber;
     }
 
     public String getLocality() {
@@ -105,6 +123,13 @@ public class AddressEntity implements Serializable {
         this.state = state;
     }
 
+    public Integer getActive() {
+        return active;
+    }
+
+    public void setActive(Integer active) {
+        this.active = active;
+    }
 
     @Override
     public boolean equals(Object obj) {
