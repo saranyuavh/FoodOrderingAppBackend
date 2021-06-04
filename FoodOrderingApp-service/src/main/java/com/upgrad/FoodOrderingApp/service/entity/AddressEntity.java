@@ -62,14 +62,6 @@ public class AddressEntity implements Serializable {
         return id;
     }
 
-    @OneToOne
-    @JoinColumn(name = "STATE_ID")
-    
-    private StateEntity state;
-
-    public Integer getId() {
-        return id;
-    }
 
     public void setId(Integer id) {
         this.id = id;
