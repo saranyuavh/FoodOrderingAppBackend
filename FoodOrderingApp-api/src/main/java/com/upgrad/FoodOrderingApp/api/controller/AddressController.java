@@ -53,7 +53,7 @@ public class AddressController {
             throw new SaveAddressException("SAR-002", "Invalid pincode");
         }
         AddressEntity addressEntity = new AddressEntity();
-        addressEntity.setFlatBuilNumber(saveAddressRequest.getFlatBuildingName());
+        addressEntity.setFlatBuildingNumber(saveAddressRequest.getFlatBuildingName());
         addressEntity.setLocality(saveAddressRequest.getLocality());
         addressEntity.setCity(saveAddressRequest.getCity());
         addressEntity.setPincode(saveAddressRequest.getPincode());
