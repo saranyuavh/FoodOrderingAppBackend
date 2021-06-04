@@ -84,4 +84,17 @@ public class CustomerService {
         customerDAO.updateUser(customerEntity);
         return customerEntity;
     }
+
+    public boolean isAuthorized(String authToken) {
+        return (customerDAO.getCustomerAuthToken(authToken) != null);
+    }
+
+    public boolean isSessionExpired(String authToken){
+        CustomerAuthEntity customerAuthEntity= customerDAO.getCustomerAuthToken(authToken);
+        if(customerAuthEntity.getExpiresAt().isBefore(ZonedDateTime.now())){
+            return true;
+        }
+        return false;
+    }
+
 }
