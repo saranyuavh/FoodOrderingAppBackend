@@ -8,6 +8,7 @@ import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
 import com.upgrad.FoodOrderingApp.service.exception.AuthenticationFailedException;
 import com.upgrad.FoodOrderingApp.service.exception.AuthorizationFailedException;
 import com.upgrad.FoodOrderingApp.service.exception.SignUpRestrictedException;
+import com.upgrad.FoodOrderingApp.service.exception.UpdateCustomerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -131,18 +132,29 @@ public class CustomerController {
 
 
     @RequestMapping(method = RequestMethod.PUT, path = "/", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<UpdateCustomerResponse> updateCustomer(@RequestHeader("authorization") final String authorization,final UpdateCustomerRequest updateCustomerRequest) throws SignUpRestrictedException {
+    public ResponseEntity<UpdateCustomerResponse> updateCustomer(@RequestHeader("authorization") final String authorization,final UpdateCustomerRequest updateCustomerRequest) throws UpdateCustomerException, AuthorizationFailedException {
 
         //Lets do some validations
-        if(updateCustomerRequest.getFirstName().isEmpty()){
 
+        String authToken = authorization.split(" ")[1];
+        if (!customerService.isAuthorized(authToken)){
+            throw new AuthorizationFailedException("ATHR-002","Customer is logged out. Log in again to access this endpoint.");
         }
+
+        if(customerService.isSessionExpired(authToken)) {
+            throw new AuthorizationFailedException("ATHR-003","Your session is expired. Log in again to access this endpoint.");
+        }
+
+        if(updateCustomerRequest.getFirstName().isEmpty()){
+            throw new UpdateCustomerException("UCR-002","First name field should not be empty");
+        }
+
         CustomerEntity customerEntity =  customerService.getCustomerAccessToken(authorization).getCustomer();
         customerEntity.setFirstName(updateCustomerRequest.getFirstName());
         customerEntity.setLastName(updateCustomerRequest.getLastName());
-        final CustomerEntity createdUserEntity = customerService.updateCustomer(customerEntity);
-        UpdateCustomerResponse userResponse = new UpdateCustomerResponse().id(createdUserEntity.getUuid()).status("CUSTOMER SUCCESSFULLY UPDATED");
-        return new ResponseEntity<>(userResponse, HttpStatus.CREATED);
+        final CustomerEntity updatedCustomer = customerService.updateCustomer(customerEntity);
+        UpdateCustomerResponse userResponse = new UpdateCustomerResponse().id(updatedCustomer.getUuid()).firstName(updatedCustomer.getFirstName()).lastName(updatedCustomer.getLastName()).status("CUSTOMER SUCCESSFULLY UPDATED");
+        return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
 
 }
