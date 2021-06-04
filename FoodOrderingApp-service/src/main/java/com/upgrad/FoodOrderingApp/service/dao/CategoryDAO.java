@@ -22,6 +22,14 @@ public class CategoryDAO {
             return null;
         }
     }
+
+    public List<CategoryEntity> getAllCategories(){
+        try {
+            return entityManager.createNamedQuery("allCategories", CategoryEntity.class).getResultList();
+        } catch(NoResultException nre) {
+            return null;
+        }
+    }
 }
 
 
