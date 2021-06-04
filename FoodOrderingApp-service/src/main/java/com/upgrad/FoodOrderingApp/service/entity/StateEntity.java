@@ -1,11 +1,11 @@
 package com.upgrad.FoodOrderingApp.service.entity;
 
 import javax.persistence.*;
+import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -64,6 +64,11 @@ public class StateEntity implements Serializable {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        return new EqualsBuilder().append(this, obj).isEquals();
+    }
+
+    @Override
     public int hashCode() {
         return new HashCodeBuilder().append(this).hashCode();
     }
@@ -74,3 +79,5 @@ public class StateEntity implements Serializable {
     }
 
 }
+
+

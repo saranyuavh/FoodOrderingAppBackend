@@ -2,12 +2,14 @@ package com.upgrad.FoodOrderingApp.service.entity;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-
-import javax.persistence.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-import javax.persistence.*;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
@@ -28,7 +30,7 @@ public class AddressEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "uuid")
+    @Column(name = "UUID")
     @Size(max = 200)
     private String uuid;
 
@@ -60,7 +62,16 @@ public class AddressEntity implements Serializable {
         return id;
     }
 
-    public void setId(Long id) {
+    @OneToOne
+    @JoinColumn(name = "STATE_ID")
+    
+    private StateEntity state;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -119,4 +130,20 @@ public class AddressEntity implements Serializable {
     public void setActive(Integer active) {
         this.active = active;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return new EqualsBuilder().append(this, obj).isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(this).hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+    }
+
 }

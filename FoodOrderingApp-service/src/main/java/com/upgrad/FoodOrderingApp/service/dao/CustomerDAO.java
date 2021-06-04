@@ -43,8 +43,8 @@ public class CustomerDAO {
         }
     }
 
-    public void updateUser(final CustomerEntity updatedUserEntity) {
-        entityManager.merge(updatedUserEntity);
+    public CustomerEntity updateUser(final CustomerEntity customerEntity) {
+        return entityManager.merge(customerEntity);
     }
 
     public String deleteUser(CustomerEntity delUser) {
