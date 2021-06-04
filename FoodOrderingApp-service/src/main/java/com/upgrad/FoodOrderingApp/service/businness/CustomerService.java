@@ -97,4 +97,30 @@ public class CustomerService {
         return false;
     }
 
+    public boolean isLoggedOut(String authToken){
+        CustomerAuthEntity customerAuthEntity= customerDAO.getCustomerAuthToken(authToken);
+        if(customerAuthEntity.getLogoutAt().isBefore(ZonedDateTime.now())){
+            return true;
+        }
+        return false;
+    }
+    public boolean checkPassword(String authToken, String password){
+        CustomerAuthEntity customerAuthEntity= customerDAO.getCustomerAuthToken(authToken);
+        CustomerEntity customerEntity = customerAuthEntity.getCustomer();
+        final String encryptedPassword = cryptographyProvider.encrypt(password, customerEntity.getSalt());
+        if (encryptedPassword.equals(customerEntity.getPassword()))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public CustomerEntity updatePassword(String authToken, String newPassword){
+        CustomerAuthEntity customerAuthEntity= customerDAO.getCustomerAuthToken(authToken);
+        CustomerEntity customerEntity = customerAuthEntity.getCustomer();
+        final String encryptedPassword = cryptographyProvider.encrypt(newPassword, customerEntity.getSalt());
+        customerEntity.setPassword(encryptedPassword);
+        return customerDAO.updateUser(customerEntity);
+    }
+
 }

@@ -50,7 +50,7 @@ public class CustomerController {
         }
         regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[\\\\[#@$%&*!^\\\\] –[{}]:;',?/*~$^+=<>]).{8,20}$";
         if (!signupUserRequest.getPassword().matches(regex)) {
-            throw new SignUpRestrictedException("SGR-003", "Invalid contact number!");
+            throw new SignUpRestrictedException("SGR-004", "Weak password!");
         }
 
         final CustomerEntity customerEntity = new CustomerEntity();
@@ -157,4 +157,38 @@ public class CustomerController {
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
 
+
+
+    @RequestMapping(method = RequestMethod.PUT, path = "/", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<UpdatePasswordResponse> updatePassword(@RequestHeader("authorization") final String authorization,final UpdatePasswordRequest updatePasswordRequest) throws AuthorizationFailedException, UpdateCustomerException {
+
+        //Lets do some validations
+
+        String authToken = authorization.split(" ")[1];
+        if (!customerService.isAuthorized(authToken)){
+            throw new AuthorizationFailedException("ATHR-001","Customer is not Logged in.");
+        }
+
+        if(customerService.isLoggedOut(authToken)) {
+            throw new AuthorizationFailedException("ATHR-003","Your session is expired. Log in again to access this endpoint.");
+        }
+
+        if(customerService.isSessionExpired(authToken)) {
+            throw new AuthorizationFailedException("ATHR-003","Your session is expired. Log in again to access this endpoint.");
+        }
+
+        if( updatePasswordRequest.getNewPassword().isEmpty() || updatePasswordRequest.getOldPassword().isEmpty()){
+            throw new UpdateCustomerException("UCR-003","No field should be empty");
+        }
+        String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[\\\\[#@$%&*!^\\\\] –[{}]:;',?/*~$^+=<>]).{8,20}$";
+        if (!updatePasswordRequest.getNewPassword().matches(regex)) {
+            throw new UpdateCustomerException("UCR-001", "Weak password!");
+        }
+        if(!customerService.checkPassword(authToken,updatePasswordRequest.getOldPassword())){
+            throw new UpdateCustomerException("UCR-004", "Incorrect old password!");
+        }
+        final CustomerEntity updatedCustomer = customerService.updatePassword(authToken,updatePasswordRequest.getNewPassword());
+        UpdatePasswordResponse userResponse = new UpdatePasswordResponse().id(updatedCustomer.getUuid()).status("CUSTOMER PASSWORD UPDATED SUCCESSFULLY");
+        return new ResponseEntity<>(userResponse, HttpStatus.OK);
+    }
 }
