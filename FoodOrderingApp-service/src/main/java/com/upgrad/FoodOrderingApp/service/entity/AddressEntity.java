@@ -3,7 +3,6 @@ package com.upgrad.FoodOrderingApp.service.entity;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -36,7 +35,7 @@ public class AddressEntity implements Serializable {
 
     @Column(name = "FLAT_BUIL_NUMBER")
     @Size(max = 255)
-    private String flatBuildingNumber;
+    private String flatBuilNo;
 
     @Column(name = "LOCALITY")
     @Size(max = 255)
@@ -75,12 +74,12 @@ public class AddressEntity implements Serializable {
         this.uuid = uuid;
     }
 
-    public String getFlatBuildingNumber() {
-        return flatBuildingNumber;
+    public String getFlatBuilNo() {
+        return flatBuilNo;
     }
 
-    public void setFlatBuildingNumber(String flatBuildingNumber) {
-        this.flatBuildingNumber = flatBuildingNumber;
+    public void setFlatBuilNo(String flatBuildingNumber) {
+        this.flatBuilNo = flatBuildingNumber;
     }
 
     public String getLocality() {

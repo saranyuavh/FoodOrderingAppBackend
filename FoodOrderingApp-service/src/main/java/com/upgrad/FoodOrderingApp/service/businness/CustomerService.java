@@ -146,8 +146,4 @@ public class CustomerService {
         return this.getCustomerAccessToken(accessToken).getCustomer();
     }
 
-    public List<AddressEntity> getCustomerAddress(String accessToken){
-        return this.getCustomer(accessToken).getSortedAddresses();
-    }
-
 }
