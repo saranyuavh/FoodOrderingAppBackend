@@ -39,6 +39,13 @@ public class StateEntity implements Serializable {
     @Size(max = 30)
     private String stateName;
 
+    public StateEntity(){}
+
+    public StateEntity(String uuid,String name){
+        this.setUuid(uuid);
+        this.setStateName(name);
+    }
+
     public Long getId() {
         return id;
     }

@@ -20,7 +20,7 @@ public class AddressService {
     private StateDAO stateDAO;
 
 
-    public AddressEntity saveAddress(AddressEntity addressEntity) {
+    public AddressEntity saveAddress(AddressEntity addressEntity, CustomerEntity customerEntity) {
         return addressDAO.saveAddress(addressEntity);
     }
 
