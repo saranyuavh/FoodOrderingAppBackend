@@ -5,8 +5,7 @@ import com.upgrad.FoodOrderingApp.service.businness.CustomerService;
 import com.upgrad.FoodOrderingApp.service.businness.ItemService;
 import com.upgrad.FoodOrderingApp.service.businness.OrderService;
 import com.upgrad.FoodOrderingApp.service.entity.*;
-import com.upgrad.FoodOrderingApp.service.exception.AuthorizationFailedException;
-import com.upgrad.FoodOrderingApp.service.exception.CouponNotFoundException;
+import com.upgrad.FoodOrderingApp.service.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -129,5 +128,22 @@ public class OrderController {
 
         return new ResponseEntity<CustomerOrderResponse>(customerOrderResponse, HttpStatus.OK);
 
+    }
+
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.POST, path = "/order", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<SaveOrderResponse> saveOrder(@RequestHeader("authorization") final String authorization, final SaveOrderRequest saveOrderRequest)
+            throws AuthorizationFailedException, CouponNotFoundException,
+            AddressNotFoundException, PaymentMethodNotFoundException,
+            RestaurantNotFoundException, ItemNotFoundException {
+
+        String authToken = authorization.split( " ")[1];
+
+        final OrdersEntity savedOrderEntity = orderService.saveOrder(saveOrderRequest, authToken);
+
+        SaveOrderResponse saveOrderResponse = new SaveOrderResponse().id(savedOrderEntity.getUuid())
+                .status("ORDER SUCCESSFULLY PLACED");
+
+        return new ResponseEntity<SaveOrderResponse>(saveOrderResponse, HttpStatus.CREATED);
     }
 }
