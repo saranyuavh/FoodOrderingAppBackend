@@ -38,8 +38,9 @@ public class AddressService {
         return addressDAO.getAddressByUuid(uuid);
     }
 
-    public void deleteAddress(AddressEntity addressEntity) {
+    public AddressEntity deleteAddress(AddressEntity addressEntity) {
         addressDAO.deleteAddress(addressEntity.getId());
+        return addressEntity;
     }
 
     public List<AddressEntity> getAllAddress(CustomerEntity customerEntity) {
