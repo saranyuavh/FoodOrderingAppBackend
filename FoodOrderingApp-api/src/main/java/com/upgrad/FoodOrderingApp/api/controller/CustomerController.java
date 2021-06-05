@@ -137,18 +137,7 @@ public class CustomerController {
         //Lets do some validations
 
         String authToken = authorization.split(" ")[1];
-        if (!customerService.isAuthorized(authToken)){
-            throw new AuthorizationFailedException("ATHR-002","Customer is logged out. Log in again to access this endpoint.");
-        }
-
-        if(customerService.isSessionExpired(authToken)) {
-            throw new AuthorizationFailedException("ATHR-003","Your session is expired. Log in again to access this endpoint.");
-        }
-
-        if(updateCustomerRequest.getFirstName().isEmpty()){
-            throw new UpdateCustomerException("UCR-002","First name field should not be empty");
-        }
-
+        customerService.validateAccessToken(authToken);
         CustomerEntity customerEntity =  customerService.getCustomerAccessToken(authorization).getCustomer();
         customerEntity.setFirstName(updateCustomerRequest.getFirstName());
         customerEntity.setLastName(updateCustomerRequest.getLastName());
@@ -165,17 +154,7 @@ public class CustomerController {
         //Lets do some validations
 
         String authToken = authorization.split(" ")[1];
-        if (!customerService.isAuthorized(authToken)){
-            throw new AuthorizationFailedException("ATHR-001","Customer is not Logged in.");
-        }
-
-        if(customerService.isLoggedOut(authToken)) {
-            throw new AuthorizationFailedException("ATHR-002","Customer is logged out. Log in again to access this endpoint");
-        }
-
-        if(customerService.isSessionExpired(authToken)) {
-            throw new AuthorizationFailedException("ATHR-003","Your session is expired. Log in again to access this endpoint.");
-        }
+        customerService.validateAccessToken(authToken);
 
         if( updatePasswordRequest.getNewPassword().isEmpty() || updatePasswordRequest.getOldPassword().isEmpty()){
             throw new UpdateCustomerException("UCR-003","No field should be empty");

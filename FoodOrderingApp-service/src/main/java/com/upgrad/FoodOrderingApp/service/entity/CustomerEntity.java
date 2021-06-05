@@ -161,4 +161,12 @@ public class CustomerEntity implements Serializable {
     }
 
 
+    public boolean hasAddress(String addressUuid) {
+        for (AddressEntity addr: addressEntities
+             ) {
+            if(addr.getUuid().equals(addressUuid))
+                return true;
+        }
+        return false;
+    }
 }

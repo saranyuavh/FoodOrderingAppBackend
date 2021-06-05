@@ -20,7 +20,7 @@ public class AddressService {
     private StateDAO stateDAO;
 
 
-    public AddressEntity saveAddress(AddressEntity addressEntity) {
+    public AddressEntity saveAddress(AddressEntity addressEntity, CustomerEntity customerEntity) {
         return addressDAO.saveAddress(addressEntity);
     }
 
@@ -38,8 +38,9 @@ public class AddressService {
         return addressDAO.getAddressByUuid(uuid);
     }
 
-    public void deleteAddress(AddressEntity addressEntity) {
+    public AddressEntity deleteAddress(AddressEntity addressEntity) {
         addressDAO.deleteAddress(addressEntity.getId());
+        return addressEntity;
     }
 
     public List<AddressEntity> getAllAddress(CustomerEntity customerEntity) {
