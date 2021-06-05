@@ -157,9 +157,9 @@ public class RestaurantController {
     @RequestMapping(method = RequestMethod.PUT, path = "/restaurant/{restaurant_id}",consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<RestaurantUpdatedResponse> updateCustomerRating(@RequestHeader("authorization") final String authorization, @RequestParam Double customerRating, @PathVariable String restaurant_id )
             throws AuthorizationFailedException, InvalidRatingException, RestaurantNotFoundException {
-        String[] bearerToken = authorization.split("Bearer ");
+        String authToken = authorization.split(" ")[1];
 
-        RestaurantEntity restaurantEntity = restaurantService.updateCustomerRating(customerRating, restaurant_id, bearerToken[1]);
+        RestaurantEntity restaurantEntity = restaurantService.updateCustomerRating(customerRating, restaurant_id, authToken);
 
         RestaurantUpdatedResponse restaurantUpdatedResponse = new RestaurantUpdatedResponse()
                 .id(UUID.fromString(restaurantEntity.getUuid())).status("RESTAURANT RATING UPDATED SUCCESSFULLY");
