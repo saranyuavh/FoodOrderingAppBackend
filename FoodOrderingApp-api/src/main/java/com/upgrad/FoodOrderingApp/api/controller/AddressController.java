@@ -62,7 +62,7 @@ public class AddressController {
             throw new SaveAddressException("SAR-002", "Invalid pincode");
         }
         AddressEntity addressEntity = new AddressEntity();
-        addressEntity.setFlatBuildingNumber(saveAddressRequest.getFlatBuildingName());
+        addressEntity.setFlatBuilNo(saveAddressRequest.getFlatBuildingName());
         addressEntity.setLocality(saveAddressRequest.getLocality());
         addressEntity.setCity(saveAddressRequest.getCity());
         addressEntity.setPincode(saveAddressRequest.getPincode());
@@ -79,12 +79,12 @@ public class AddressController {
     public ResponseEntity<AddressListResponse> getAllSavedAddresses(@RequestHeader("authorization") final String authorization) throws AuthorizationFailedException {
         String authToken =authorization.split(" ")[1];
         customerService.validateAccessToken(authToken);
-        List<AddressEntity> addressEntities = customerService.getCustomerAddress(authToken);
+        List<AddressEntity> addressEntities = addressService.getAllAddress(customerService.getCustomer(authToken));
         List<AddressList> addressList = new ArrayList<>();
         for (AddressEntity addressEntity :addressEntities) {
             AddressList addTmp = new AddressList();
             addTmp.setId(UUID.fromString(addressEntity.getUuid()));
-            addTmp.setFlatBuildingName(addressEntity.getFlatBuildingNumber());
+            addTmp.setFlatBuildingName(addressEntity.getFlatBuilNo());
             addTmp.locality(addressEntity.getLocality());
             addTmp.city(addressEntity.getCity());
             addTmp.pincode(addressEntity.getPincode());

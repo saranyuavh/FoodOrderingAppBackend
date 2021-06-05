@@ -19,7 +19,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -124,7 +123,7 @@ public class RestaurantController {
         RestaurantDetailsResponseAddress responseAddress = new RestaurantDetailsResponseAddress();
 
         responseAddress.setId(UUID.fromString(addressEntity.getUuid()));
-        responseAddress.setFlatBuildingName(addressEntity.getFlatBuildingNumber());
+        responseAddress.setFlatBuildingName(addressEntity.getFlatBuilNo());
         responseAddress.setLocality(addressEntity.getLocality());
         responseAddress.setCity(addressEntity.getCity());
         responseAddress.setPincode(addressEntity.getPincode());

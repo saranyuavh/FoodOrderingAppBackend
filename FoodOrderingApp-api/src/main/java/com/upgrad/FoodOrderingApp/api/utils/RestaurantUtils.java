@@ -38,7 +38,7 @@ public class RestaurantUtils {
         RestaurantDetailsResponseAddress responseAddress = new RestaurantDetailsResponseAddress();
 
         responseAddress.setId(UUID.fromString(addressEntity.getUuid()));
-        responseAddress.setFlatBuildingName(addressEntity.getFlatBuildingNumber());
+        responseAddress.setFlatBuildingName(addressEntity.getFlatBuilNo());
         responseAddress.setLocality(addressEntity.getLocality());
         responseAddress.setCity(addressEntity.getCity());
         responseAddress.setPincode(addressEntity.getPincode());
