@@ -1,6 +1,7 @@
 package com.upgrad.FoodOrderingApp.service.businness;
 
 import com.upgrad.FoodOrderingApp.service.dao.CustomerDAO;
+import com.upgrad.FoodOrderingApp.service.entity.AddressEntity;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerAuthEntity;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
 import com.upgrad.FoodOrderingApp.service.exception.AuthenticationFailedException;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -143,4 +145,9 @@ public class CustomerService {
     public CustomerEntity getCustomer(String accessToken) {
         return this.getCustomerAccessToken(accessToken).getCustomer();
     }
+
+    public List<AddressEntity> getCustomerAddress(String accessToken){
+        return this.getCustomer(accessToken).getSortedAddresses();
+    }
+
 }

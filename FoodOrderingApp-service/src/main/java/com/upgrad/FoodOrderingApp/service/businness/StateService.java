@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import javax.validation.constraints.NotNull;
 
 @Service
 public class StateService<StateDao> {
@@ -15,5 +16,9 @@ public class StateService<StateDao> {
     @Transactional
     public StateEntity getStateById(final Long stateId) {
         return stateDAO.getStateById(stateId);
+    }
+
+    public StateEntity getStateByUuid(@NotNull String stateUuid) {
+        return stateDAO.getStateByUuid(stateUuid);
     }
 }

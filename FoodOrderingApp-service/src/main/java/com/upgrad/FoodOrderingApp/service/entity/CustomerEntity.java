@@ -9,6 +9,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 @Entity
 @Table(name = "customer")
@@ -59,6 +62,24 @@ public class CustomerEntity implements Serializable {
     @NotNull
     @Size(max = 30)
     private String contactNumber;
+
+    public List<AddressEntity> getAddressEntities() {
+        return addressEntities;
+    }
+
+    public List<AddressEntity> getSortedAddresses() {
+        List<AddressEntity> sorted = new ArrayList<>(addressEntities);
+        sorted.sort(Comparator.comparing(AddressEntity::getId).reversed());
+        return sorted;
+    }
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "customer_address",
+            joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "address_id", referencedColumnName = "id", nullable = false)
+    )
+    private List<AddressEntity> addressEntities = new ArrayList<>();
+
 
     public Integer getId() {
         return id;
