@@ -1,5 +1,6 @@
 package com.upgrad.FoodOrderingApp.service.dao;
 
+import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
 import com.upgrad.FoodOrderingApp.service.entity.StateEntity;
 import org.springframework.stereotype.Repository;
 
@@ -17,6 +18,15 @@ public class StateDAO {
             return entityManager.createNamedQuery("stateById", StateEntity.class).setParameter("id", stateId)
                     .getSingleResult();
         } catch(NoResultException nre) {
+            return null;
+        }
+    }
+
+    public StateEntity getStateByUuid(String stateUuid) {
+        try {
+            return entityManager.createNamedQuery("stateByUuid", StateEntity.class).setParameter("uuid", stateUuid)
+                    .getSingleResult();
+        } catch (NoResultException nre) {
             return null;
         }
     }

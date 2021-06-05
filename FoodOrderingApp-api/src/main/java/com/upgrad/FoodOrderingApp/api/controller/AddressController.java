@@ -3,7 +3,10 @@ package com.upgrad.FoodOrderingApp.api.controller;
 import com.upgrad.FoodOrderingApp.api.model.*;
 import com.upgrad.FoodOrderingApp.service.businness.AddressService;
 import com.upgrad.FoodOrderingApp.service.businness.CustomerService;
+import com.upgrad.FoodOrderingApp.service.businness.StateService;
 import com.upgrad.FoodOrderingApp.service.entity.AddressEntity;
+import com.upgrad.FoodOrderingApp.service.entity.StateEntity;
+import com.upgrad.FoodOrderingApp.service.exception.AddressNotFoundException;
 import com.upgrad.FoodOrderingApp.service.exception.AuthorizationFailedException;
 import com.upgrad.FoodOrderingApp.service.exception.SaveAddressException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +18,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 @RestController
 @CrossOrigin
@@ -27,8 +33,11 @@ public class AddressController {
     @Autowired
     private CustomerService customerService;
 
+    @Autowired
+    private StateService stateService;
+
     @RequestMapping(method = RequestMethod.POST, path = "/", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<SaveAddressResponse> saveAddress(@RequestHeader("authorization") final String authorization, final SaveAddressRequest saveAddressRequest) throws AuthorizationFailedException, SaveAddressException {
+    public ResponseEntity<SaveAddressResponse> saveAddress(@RequestHeader("authorization") final String authorization, final SaveAddressRequest saveAddressRequest) throws AuthorizationFailedException, SaveAddressException, AddressNotFoundException {
         String authToken = authorization.split(" ")[1];
 
         if (!customerService.isAuthorized(authToken)){
@@ -57,10 +66,36 @@ public class AddressController {
         addressEntity.setLocality(saveAddressRequest.getLocality());
         addressEntity.setCity(saveAddressRequest.getCity());
         addressEntity.setPincode(saveAddressRequest.getPincode());
-        //addressEntity.setState();
-        //addressEntity.
+        StateEntity stateEntity= stateService.getStateByUuid(saveAddressRequest.getStateUuid());
+        if(stateEntity == null) {
+            throw new AddressNotFoundException("ANF-002","No state by this id");
+        }
+
         addressEntity = addressService.saveAddress(addressEntity);
-        SaveAddressResponse saveAddressResponse = new SaveAddressResponse().id(addressEntity.getUuid()).status("CUSTOMER PASSWORD UPDATED SUCCESSFULLY");
+        SaveAddressResponse saveAddressResponse = new SaveAddressResponse().id(addressEntity.getUuid()).status("ADDRESS SUCCESSFULLY REGISTERED");
         return new ResponseEntity<>(saveAddressResponse, HttpStatus.OK);
     }
+    @RequestMapping(method = RequestMethod.GET, path = "/customer", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<AddressListResponse> getAllSavedAddresses(@RequestHeader("authorization") final String authorization) throws AuthorizationFailedException {
+        String authToken =authorization.split(" ")[1];
+        customerService.validateAccessToken(authToken);
+        List<AddressEntity> addressEntities = customerService.getCustomerAddress(authToken);
+        List<AddressList> addressList = new ArrayList<>();
+        for (AddressEntity addressEntity :addressEntities) {
+            AddressList addTmp = new AddressList();
+            addTmp.setId(UUID.fromString(addressEntity.getUuid()));
+            addTmp.setFlatBuildingName(addressEntity.getFlatBuildingNumber());
+            addTmp.locality(addressEntity.getLocality());
+            addTmp.city(addressEntity.getCity());
+            addTmp.pincode(addressEntity.getPincode());
+            AddressListState state = new AddressListState();
+            state.id(UUID.fromString(addressEntity.getState().getUuid())).stateName(addressEntity.getState().getStateName());
+            addTmp.setState(state);
+            addressList.add(addTmp);
+        }
+        AddressListResponse response = new AddressListResponse();
+        response.setAddresses(addressList);
+        return new ResponseEntity<AddressListResponse>(response, HttpStatus.OK);
+    }
+
 }

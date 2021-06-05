@@ -5,10 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-
-import com.upgrad.FoodOrderingApp.service.entity.StateEntity;
-import org.springframework.stereotype.Repository;
-
 import javax.persistence.PersistenceContext;
 
 @Repository
@@ -30,8 +26,4 @@ public class AddressDAO {
         return addressEntity;
     }
 
-    public StateEntity getStateByUUID(String uuid) {
-        StateEntity se = null;
-        return se;
-    }
 }
