@@ -1,6 +1,6 @@
 package com.upgrad.FoodOrderingApp.service.entity;
 
-//import com.upgrad.FoodOrderingApp.api.model.ItemList;
+import com.upgrad.FoodOrderingApp.api.model.ItemList;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -36,12 +36,7 @@ public class ItemEntity implements Serializable {
     @NotNull
     private Integer price;
 
-    @Column(name = "TYPE")
-    @NotNull
-    @Size(max = 10)
-    private String type;
-
-//    private ItemList.ItemTypeEnum type;
+    private ItemList.ItemTypeEnum type;
 
     public long getId() {
         return id;
@@ -75,20 +70,12 @@ public class ItemEntity implements Serializable {
         this.price = price;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    /*public ItemList.ItemTypeEnum getType() {
+    public ItemList.ItemTypeEnum getType() {
         return type;
     }
 
     public void setType(ItemList.ItemTypeEnum type) {
         this.type = type;
-    }*/
+    }
 }
 

@@ -38,6 +38,9 @@ public class OrderService {
     @Autowired
     RestaurantService restaurantService;
 
+    @Autowired
+    PaymentService paymentService;
+
     @Transactional
     public CouponEntity getCouponByName(String couponName, final String authorizationToken) throws AuthorizationFailedException {
         customerService.validateAccessToken(authorizationToken);
@@ -70,10 +73,14 @@ public class OrderService {
 
         RestaurantEntity restaurantEntity = restaurantService.getRestaurantByUUId(saveOrderRequest.getRestaurantId().toString());
 
+        PaymentEntity paymentEntity = paymentService.getPaymentByUuid(saveOrderRequest.getPaymentId().toString());
+
         if (couponEntity == null) {
             throw new CouponNotFoundException("CPF-002", "No coupon by this id");
         } else if (addressEntity == null) {
             throw new AddressNotFoundException("ANF-003", "No address by this id");
+        } else if (paymentEntity ==  null) {
+            throw new PaymentMethodNotFoundException("PNF-002", "No payment method found by this id");
         } else if (restaurantEntity == null) {
             throw new RestaurantNotFoundException("RNF-001", "No restaurant by this id");
         }
