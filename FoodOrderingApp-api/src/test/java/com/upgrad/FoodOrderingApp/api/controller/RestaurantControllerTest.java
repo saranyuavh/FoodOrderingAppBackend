@@ -39,7 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 public class RestaurantControllerTest {
-
+/*
     @Autowired
     private MockMvc mockMvc;
 
@@ -466,4 +466,6 @@ public class RestaurantControllerTest {
         restaurantEntity.setRestaurantName("Famous Restaurant");
         return restaurantEntity;
     }
+
+ */
 }

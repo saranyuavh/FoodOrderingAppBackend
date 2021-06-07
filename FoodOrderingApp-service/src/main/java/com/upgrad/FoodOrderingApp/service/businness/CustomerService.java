@@ -27,6 +27,12 @@ public class CustomerService {
 
 
     public CustomerEntity saveCustomer(final CustomerEntity customerEntity) throws SignUpRestrictedException {
+
+        String regex = "^[a-zA-Z0-9]+@([a-zA-Z0-9]+\\.)+[a-zA-Z0-9]+$";
+        if (!customerEntity.getEmail().matches(regex)) {
+            throw new SignUpRestrictedException("SGR-002", "Invalid email-id format!");
+        }
+
         if (this.contactExists(customerEntity.getContactNumber())) {
             throw new SignUpRestrictedException("SGR-001","This contact number is already registered! Try other contact number.");
         }

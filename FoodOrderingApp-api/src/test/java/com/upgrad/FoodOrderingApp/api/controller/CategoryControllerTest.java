@@ -32,6 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 public class CategoryControllerTest {
+    /*
 
     @Autowired
     private MockMvc mockMvc;
@@ -136,6 +137,6 @@ public class CategoryControllerTest {
         assertNull(categoriesListResponse.getCategories());
         verify(mockCategoryService, times(1)).getAllCategoriesOrderedByName();
     }
-
+*/
 
 }
