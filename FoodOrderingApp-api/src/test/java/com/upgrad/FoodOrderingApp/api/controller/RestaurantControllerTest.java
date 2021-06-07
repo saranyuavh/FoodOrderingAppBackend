@@ -7,6 +7,8 @@ import com.upgrad.FoodOrderingApp.service.businness.CategoryService;
 import com.upgrad.FoodOrderingApp.service.businness.CustomerService;
 import com.upgrad.FoodOrderingApp.service.businness.ItemService;
 import com.upgrad.FoodOrderingApp.service.businness.RestaurantService;
+import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
+import com.upgrad.FoodOrderingApp.service.entity.RestaurantEntity;
 import com.upgrad.FoodOrderingApp.service.exception.AuthorizationFailedException;
 import com.upgrad.FoodOrderingApp.service.exception.CategoryNotFoundException;
 import com.upgrad.FoodOrderingApp.service.exception.InvalidRatingException;
@@ -255,7 +257,7 @@ public class RestaurantControllerTest {
     public void shouldUpdateRestaurantRating() throws Exception {
         final String restaurantId = UUID.randomUUID().toString();
 
-        when(mockCustomerService.getCustomer("database_accesstoken2"))
+        when(mockCustomerService.getCustomerByAuthToken("database_accesstoken2"))
                 .thenReturn(new CustomerEntity());
 
         final RestaurantEntity restaurantEntity = getRestaurantEntity();
@@ -270,7 +272,7 @@ public class RestaurantControllerTest {
                         .header("authorization", "Bearer database_accesstoken2"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id").value(restaurantId));
-        verify(mockCustomerService, times(1)).getCustomer("database_accesstoken2");
+        verify(mockCustomerService, times(1)).getCustomerByAuthToken("database_accesstoken2");
         verify(mockRestaurantService, times(1)).restaurantByUUID(restaurantId);
         verify(mockRestaurantService, times(1))
                 .updateRestaurantRating(restaurantEntity, 4.5);
@@ -280,7 +282,7 @@ public class RestaurantControllerTest {
     // not logged in.
     @Test
     public void shouldNotUpdateRestaurantRatingIfCustomerIsNotLoggedIn() throws Exception {
-        when(mockCustomerService.getCustomer("invalid_auth"))
+        when(mockCustomerService.getCustomerByAuthToken("invalid_auth"))
                 .thenThrow(new AuthorizationFailedException("ATHR-001", "Customer is not Logged in."));
 
         mockMvc
@@ -289,7 +291,7 @@ public class RestaurantControllerTest {
                         .header("authorization", "Bearer invalid_auth"))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("code").value("ATHR-001"));
-        verify(mockCustomerService, times(1)).getCustomer("invalid_auth");
+        verify(mockCustomerService, times(1)).getCustomerByAuthToken("invalid_auth");
         verify(mockRestaurantService, times(0)).restaurantByUUID(anyString());
         verify(mockRestaurantService, times(0)).updateRestaurantRating(any(), anyDouble());
     }
@@ -298,7 +300,7 @@ public class RestaurantControllerTest {
     // already logged out.
     @Test
     public void shouldNotUpdateRestaurantRatingIfCustomerIsLoggedOut() throws Exception {
-        when(mockCustomerService.getCustomer("invalid_auth"))
+        when(mockCustomerService.getCustomerByAuthToken("invalid_auth"))
                 .thenThrow(new AuthorizationFailedException("ATHR-002", "Customer is logged out. Log in again to access this endpoint."));
 
         mockMvc
@@ -307,7 +309,7 @@ public class RestaurantControllerTest {
                         .header("authorization", "Bearer invalid_auth"))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("code").value("ATHR-002"));
-        verify(mockCustomerService, times(1)).getCustomer("invalid_auth");
+        verify(mockCustomerService, times(1)).getCustomerByAuthToken("invalid_auth");
         verify(mockRestaurantService, times(0)).restaurantByUUID(anyString());
         verify(mockRestaurantService, times(0)).updateRestaurantRating(any(), anyDouble());
     }
@@ -316,7 +318,7 @@ public class RestaurantControllerTest {
     // is already expired.
     @Test
     public void shouldNotUpdateRestaurantRatingIfCustomerSessionIsExpired() throws Exception {
-        when(mockCustomerService.getCustomer("invalid_auth"))
+        when(mockCustomerService.getCustomerByAuthToken("invalid_auth"))
                 .thenThrow(new AuthorizationFailedException("ATHR-003", "Your session is expired. Log in again to access this endpoint."));
 
         mockMvc
@@ -325,7 +327,7 @@ public class RestaurantControllerTest {
                         .header("authorization", "Bearer invalid_auth"))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("code").value("ATHR-003"));
-        verify(mockCustomerService, times(1)).getCustomer("invalid_auth");
+        verify(mockCustomerService, times(1)).getCustomerByAuthToken("invalid_auth");
         verify(mockRestaurantService, times(0)).restaurantByUUID(anyString());
         verify(mockRestaurantService, times(0)).updateRestaurantRating(any(), anyDouble());
     }
@@ -334,7 +336,7 @@ public class RestaurantControllerTest {
     // field is empty.
     @Test
     public void shouldNotUpdateRestaurantIfRestaurantIdIsEmpty() throws Exception {
-        when(mockCustomerService.getCustomer("database_accesstoken2"))
+        when(mockCustomerService.getCustomerByAuthToken("database_accesstoken2"))
                 .thenReturn(new CustomerEntity());
 
         when(mockRestaurantService.restaurantByUUID(anyString()))
@@ -345,7 +347,7 @@ public class RestaurantControllerTest {
                 .header("authorization", "Bearer database_accesstoken2"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("code").value("RNF-002"));
-        verify(mockCustomerService, times(0)).getCustomer("database_accesstoken2");
+        verify(mockCustomerService, times(0)).getCustomerByAuthToken("database_accesstoken2");
         verify(mockRestaurantService, times(1)).restaurantByUUID(anyString());
     }
 
@@ -355,7 +357,7 @@ public class RestaurantControllerTest {
     public void shouldNotUpdateRestaurantRatingIfRestaurantDoesNotExists() throws Exception {
         final String restaurantId = UUID.randomUUID().toString();
 
-        when(mockCustomerService.getCustomer("database_accesstoken2"))
+        when(mockCustomerService.getCustomerByAuthToken("database_accesstoken2"))
                 .thenReturn(new CustomerEntity());
 
         when(mockRestaurantService.restaurantByUUID(restaurantId))
@@ -367,7 +369,7 @@ public class RestaurantControllerTest {
                         .header("authorization", "Bearer database_accesstoken2"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("code").value("RNF-001"));
-        verify(mockCustomerService, times(1)).getCustomer("database_accesstoken2");
+        verify(mockCustomerService, times(1)).getCustomerByAuthToken("database_accesstoken2");
         verify(mockRestaurantService, times(1)).restaurantByUUID(restaurantId);
         verify(mockRestaurantService, times(0))
                 .updateRestaurantRating(any(), anyDouble());
@@ -379,7 +381,7 @@ public class RestaurantControllerTest {
     public void shouldNotUpdateRestaurantRatingIfNewRatingIsLessThan1() throws Exception {
         final String restaurantId = UUID.randomUUID().toString();
 
-        when(mockCustomerService.getCustomer("database_accesstoken2"))
+        when(mockCustomerService.getCustomerByAuthToken("database_accesstoken2"))
                 .thenReturn(new CustomerEntity());
 
         final RestaurantEntity restaurantEntity = getRestaurantEntity();
@@ -394,7 +396,7 @@ public class RestaurantControllerTest {
                         .header("authorization", "Bearer database_accesstoken2"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("code").value("IRE-001"));
-        verify(mockCustomerService, times(1)).getCustomer("database_accesstoken2");
+        verify(mockCustomerService, times(1)).getCustomerByAuthToken("database_accesstoken2");
         verify(mockRestaurantService, times(1)).restaurantByUUID(restaurantId);
         verify(mockRestaurantService, times(1))
                 .updateRestaurantRating(restaurantEntity, -5.5);
@@ -406,7 +408,7 @@ public class RestaurantControllerTest {
     public void shouldNotUpdateRestaurantRatingIfNewRatingIsGreaterThan5() throws Exception {
         final String restaurantId = UUID.randomUUID().toString();
 
-        when(mockCustomerService.getCustomer("database_accesstoken2"))
+        when(mockCustomerService.getCustomerByAuthToken("database_accesstoken2"))
                 .thenReturn(new CustomerEntity());
 
         final RestaurantEntity restaurantEntity = getRestaurantEntity();
@@ -421,7 +423,7 @@ public class RestaurantControllerTest {
                         .header("authorization", "Bearer database_accesstoken2"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("code").value("IRE-001"));
-        verify(mockCustomerService, times(1)).getCustomer("database_accesstoken2");
+        verify(mockCustomerService, times(1)).getCustomerByAuthToken("database_accesstoken2");
         verify(mockRestaurantService, times(1)).restaurantByUUID(restaurantId);
         verify(mockRestaurantService, times(1))
                 .updateRestaurantRating(restaurantEntity, 5.5);

@@ -5,7 +5,7 @@ import com.upgrad.FoodOrderingApp.service.dao.OrderDAO;
 import com.upgrad.FoodOrderingApp.service.dao.OrderItemDAO;
 import com.upgrad.FoodOrderingApp.service.entity.ItemEntity;
 import com.upgrad.FoodOrderingApp.service.entity.OrderItemEntity;
-import com.upgrad.FoodOrderingApp.service.entity.OrdersEntity;
+import com.upgrad.FoodOrderingApp.service.entity.OrderEntity;
 import com.upgrad.FoodOrderingApp.service.entity.RestaurantEntity;
 import com.upgrad.FoodOrderingApp.service.exception.ItemNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class ItemService {
 
     @Autowired
     OrderDAO orderDAO;
-    public List<OrderItemEntity> getItemsByOrder(OrdersEntity orderEntity) {
+    public List<OrderItemEntity> getItemsByOrder(OrderEntity orderEntity) {
         return orderItemDAO.getItemsByOrder(orderEntity);
     }
 
@@ -44,7 +44,7 @@ public class ItemService {
 
         List<ItemEntity> itemEntityList = new ArrayList<>();
 
-        for (OrdersEntity orderEntity : orderDAO.getOrdersByRestaurant(restaurantEntity)) {
+        for (OrderEntity orderEntity : orderDAO.getOrdersByRestaurant(restaurantEntity)) {
             for (OrderItemEntity orderItemEntity : orderItemDAO.getItemsByOrder(orderEntity)) {
                 itemEntityList.add(orderItemEntity.getItem());
             }

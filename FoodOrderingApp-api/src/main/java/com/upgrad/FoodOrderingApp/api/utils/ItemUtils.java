@@ -15,7 +15,7 @@ public class ItemUtils {
             itemDetail.setId(UUID.fromString(itemEntity.getUuid()));
             itemDetail.setItemName(itemEntity.getItemName());
             itemDetail.setPrice(itemEntity.getPrice());
-            itemDetail.setItemType(itemEntity.getType());
+            itemDetail.setItemType(ItemList.ItemTypeEnum.fromValue(itemEntity.getType().name()));
             itemLists.add(itemDetail);
         }
         return  itemLists;

@@ -36,7 +36,7 @@ public class RestaurantService {
         return restaurantDAO.getRestaurantByCategoryId(categoryID);
     }
 
-    public RestaurantEntity getRestaurantByUUId(String restaurantUUID) {
+    public RestaurantEntity restaurantByUUID(String restaurantUUID) {
         return restaurantDAO.getRestaurantByUUId(restaurantUUID);
     }
 

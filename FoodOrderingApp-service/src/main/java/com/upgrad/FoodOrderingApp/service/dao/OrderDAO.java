@@ -2,7 +2,7 @@ package com.upgrad.FoodOrderingApp.service.dao;
 
 import com.upgrad.FoodOrderingApp.service.entity.CouponEntity;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
-import com.upgrad.FoodOrderingApp.service.entity.OrdersEntity;
+import com.upgrad.FoodOrderingApp.service.entity.OrderEntity;
 import com.upgrad.FoodOrderingApp.service.entity.RestaurantEntity;
 import org.springframework.stereotype.Repository;
 
@@ -26,18 +26,18 @@ public class OrderDAO {
         }
     }
 
-    public List<OrdersEntity> getCustomerOrders(CustomerEntity customerEntity) {
+    public List<OrderEntity> getCustomerOrders(CustomerEntity customerEntity) {
         try {
-            return entityManager.createNamedQuery("ordersByCustomer", OrdersEntity.class).setParameter("customer", customerEntity)
+            return entityManager.createNamedQuery("ordersByCustomer", OrderEntity.class).setParameter("customer", customerEntity)
                     .getResultList();
         } catch(NoResultException nre) {
             return null;
         }
     }
 
-    public OrdersEntity saveOrder(OrdersEntity ordersEntity) {
-        entityManager.persist(ordersEntity);
-        return ordersEntity;
+    public OrderEntity saveOrder(OrderEntity orderEntity) {
+        entityManager.persist(orderEntity);
+        return orderEntity;
     }
 
     public CouponEntity getCouponByUuid(String couponId) {
@@ -49,9 +49,9 @@ public class OrderDAO {
         }
     }
 
-    public List<OrdersEntity> getOrdersByRestaurant(final RestaurantEntity restaurantEntity) {
+    public List<OrderEntity> getOrdersByRestaurant(final RestaurantEntity restaurantEntity) {
         try {
-            return entityManager.createNamedQuery("ordersByRestaurant", OrdersEntity.class)
+            return entityManager.createNamedQuery("ordersByRestaurant", OrderEntity.class)
                     .setParameter("restaurant", restaurantEntity).getResultList();
         } catch (NoResultException nre) {
             return null;

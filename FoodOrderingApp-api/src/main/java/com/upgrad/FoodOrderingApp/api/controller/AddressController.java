@@ -61,7 +61,7 @@ public class AddressController {
             throw new AddressNotFoundException("ANF-002","No state by this id");
         }
         addressEntity.setState(stateEntity);
-        addressEntity = addressService.saveAddress(addressEntity, customerService.getCustomer(authToken));
+        addressEntity = addressService.saveAddress(addressEntity, customerService.getCustomerByAuthToken(authToken));
         SaveAddressResponse saveAddressResponse = new SaveAddressResponse().id(addressEntity.getUuid()).status("ADDRESS SUCCESSFULLY REGISTERED");
         return new ResponseEntity<>(saveAddressResponse, HttpStatus.OK);
     }
@@ -69,7 +69,7 @@ public class AddressController {
     public ResponseEntity<AddressListResponse> getAllSavedAddresses(@RequestHeader("authorization") final String authorization) throws AuthorizationFailedException {
         String authToken =authorization.split(" ")[1];
         customerService.validateAccessToken(authToken);
-        List<AddressEntity> addressEntities = addressService.getAllAddress(customerService.getCustomer(authToken));
+        List<AddressEntity> addressEntities = addressService.getAllAddress(customerService.getCustomerByAuthToken(authToken));
         List<AddressList> addressList = new ArrayList<>();
         for (AddressEntity addressEntity :addressEntities) {
             AddressList addTmp = new AddressList();
@@ -92,7 +92,7 @@ public class AddressController {
     public ResponseEntity<DeleteAddressResponse> deleteSavedAddress(@PathVariable("address_id") String addressUuid, @RequestHeader("authorization") final String authorization) throws AuthorizationFailedException, AddressNotFoundException {
         String authToken = authorization.split(" ")[1];
         customerService.validateAccessToken(authorization);
-        CustomerEntity custmer = customerService.getCustomer(authToken);
+        CustomerEntity custmer = customerService.getCustomerByAuthToken(authToken);
         if (! custmer.hasAddress(addressUuid)) {
             throw new AuthorizationFailedException("ATHR-004","You are not authorized to view/update/delete any one else's address");
         }

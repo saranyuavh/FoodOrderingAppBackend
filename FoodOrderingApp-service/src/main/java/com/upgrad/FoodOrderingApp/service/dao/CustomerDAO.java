@@ -69,4 +69,7 @@ public class CustomerDAO {
     }
 
 
+    public CustomerAuthEntity updateAuthToken(CustomerAuthEntity customerAuthEntity) {
+        return entityManager.merge(customerAuthEntity);
+    }
 }

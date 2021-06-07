@@ -26,7 +26,7 @@ public class OrderItemEntity implements Serializable {
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "ORDER_ID")
-    private OrdersEntity orders;
+    private OrderEntity orders;
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -49,11 +49,11 @@ public class OrderItemEntity implements Serializable {
         this.id = id;
     }
 
-    public OrdersEntity getOrders() {
+    public OrderEntity getOrders() {
         return orders;
     }
 
-    public void setOrders(OrdersEntity orders) {
+    public void setOrders(OrderEntity orders) {
         this.orders = orders;
     }
 
