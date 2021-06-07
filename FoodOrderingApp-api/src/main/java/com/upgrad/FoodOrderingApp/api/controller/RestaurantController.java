@@ -105,7 +105,7 @@ public class RestaurantController {
             throw new RestaurantNotFoundException("RNF-002", "Restaurant id field should not be empty");
         }
 
-        final RestaurantEntity restaurant = restaurantService.getRestaurantByUUId(restaurant_id);
+        final RestaurantEntity restaurant = restaurantService.restaurantByUUID(restaurant_id);
 
         if(restaurant == null){
             throw new RestaurantNotFoundException("RNF-001", "No restaurant by this id");

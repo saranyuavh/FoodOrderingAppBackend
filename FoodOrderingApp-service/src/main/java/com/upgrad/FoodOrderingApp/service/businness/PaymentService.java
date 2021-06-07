@@ -20,7 +20,7 @@ public class PaymentService {
     }
 
     @Transactional
-    public PaymentEntity getPaymentByUuid(final String paymentUuid) {
+    public PaymentEntity getPaymentByUUID(final String paymentUuid) {
         return paymentDao.getPaymentByUuid(paymentUuid);
     }
 

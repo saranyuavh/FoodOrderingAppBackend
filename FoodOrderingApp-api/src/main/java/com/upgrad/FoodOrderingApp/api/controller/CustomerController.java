@@ -156,17 +156,8 @@ public class CustomerController {
         String authToken = authorization.split(" ")[1];
         customerService.validateAccessToken(authToken);
 
-        if( updatePasswordRequest.getNewPassword().isEmpty() || updatePasswordRequest.getOldPassword().isEmpty()){
-            throw new UpdateCustomerException("UCR-003","No field should be empty");
-        }
-        String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[\\\\[#@$%&*!^\\\\] –[{}]:;',?/*~$^+=<>]).{8,20}$";
-        if (!updatePasswordRequest.getNewPassword().matches(regex)) {
-            throw new UpdateCustomerException("UCR-001", "Weak password!");
-        }
-        if(!customerService.checkPassword(authToken,updatePasswordRequest.getOldPassword())){
-            throw new UpdateCustomerException("UCR-004", "Incorrect old password!");
-        }
-        final CustomerEntity updatedCustomer = customerService.updatePassword(authToken,updatePasswordRequest.getNewPassword());
+        CustomerEntity customerEntity = customerService.getCustomerByAuthToken(authToken);
+        final CustomerEntity updatedCustomer = customerService.updateCustomerPassword(updatePasswordRequest.getOldPassword(),updatePasswordRequest.getNewPassword(), customerEntity);
         UpdatePasswordResponse userResponse = new UpdatePasswordResponse().id(updatedCustomer.getUuid()).status("CUSTOMER PASSWORD UPDATED SUCCESSFULLY");
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }

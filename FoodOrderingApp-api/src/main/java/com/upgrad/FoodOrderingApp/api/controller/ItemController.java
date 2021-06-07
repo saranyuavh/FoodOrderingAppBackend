@@ -30,7 +30,7 @@ public class ItemController {
     public ResponseEntity<ItemListResponse> getItemByPopularity(@PathVariable("restaurant_id") final String restaurantUuid)
             throws RestaurantNotFoundException {
 
-        RestaurantEntity restaurantEntity = restaurantService.getRestaurantByUUId(restaurantUuid);
+        RestaurantEntity restaurantEntity = restaurantService.restaurantByUUID(restaurantUuid);
 
         if (restaurantEntity == null) {
             throw new RestaurantNotFoundException("RNF-001", "No restaurant by this id");
@@ -43,8 +43,9 @@ public class ItemController {
         int itemCount = 0;
 
         for(ItemEntity itemEntity: itemEntityList) {
+
             ItemList itemList = new ItemList().id(UUID.fromString(itemEntity.getUuid()))
-                    .itemName(itemEntity.getItemName()).price(itemEntity.getPrice()).itemType(itemEntity.getType());
+                    .itemName(itemEntity.getItemName()).price(itemEntity.getPrice()).itemType(ItemList.ItemTypeEnum.fromValue(itemEntity.getType().name()));
             itemListResponse.add(itemList);
             itemCount += 1;
             if (itemCount >= 5)
