@@ -25,7 +25,7 @@ public class CustomerService {
     @Autowired
     private PasswordCryptographyProvider cryptographyProvider;
 
-
+    @Transactional
     public CustomerEntity saveCustomer(final CustomerEntity customerEntity) throws SignUpRestrictedException {
 
         String regex = "^[a-zA-Z0-9]+@([a-zA-Z0-9]+\\.)+[a-zA-Z0-9]+$";
@@ -43,7 +43,7 @@ public class CustomerService {
         return this.createUser(customerEntity);
     }
 
-    @Transactional(propagation = Propagation.REQUIRED)
+    //@Transactional(propagation = Propagation.REQUIRED)
     public CustomerEntity createUser(final CustomerEntity customerEntity) {
 
         String[] encryptedText = cryptographyProvider.encrypt(customerEntity.getPassword());
@@ -53,6 +53,7 @@ public class CustomerService {
 
     }
 
+    @Transactional
     public CustomerAuthEntity authenticate(String contact, String password) throws AuthenticationFailedException {
         CustomerEntity customerEntity = customerDAO.getUserByContact(contact);
         final String encryptedPassword = cryptographyProvider.encrypt(password, customerEntity.getSalt());
@@ -95,7 +96,7 @@ public class CustomerService {
         return customerEntity;
     }
 
-    @javax.transaction.Transactional
+    //@javax.transaction.Transactional
     public void validateAccessToken(final String authorizationToken) throws AuthorizationFailedException {
 
         CustomerAuthEntity customerAuthTokenEntity = customerDAO.getCustomerAuthToken(authorizationToken);

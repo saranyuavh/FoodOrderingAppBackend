@@ -58,7 +58,7 @@ public class CustomerEntity implements Serializable {
     @Size(max = 200)
     private String salt;
 
-    @Column(name = "CONTACTNUMBER")
+    @Column(name = "CONTACT_NUMBER")
     @NotNull
     @Size(max = 30)
     private String contactNumber;

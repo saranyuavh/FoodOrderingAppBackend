@@ -19,13 +19,12 @@ public class AddressService {
     @Autowired
     private StateDAO stateDAO;
 
-
+    @Transactional
     public AddressEntity saveAddress(AddressEntity addressEntity, CustomerEntity customerEntity) {
         return addressDAO.saveAddress(addressEntity);
     }
 
   
-    @Transactional
     public AddressEntity getAddressById(final Long addressId) {
         return addressDAO.getAddressById(addressId);
     }
@@ -48,6 +47,7 @@ public class AddressService {
     }
 
     public List<StateEntity> getAllStates() {
-        return null;
+
+        return stateDAO.getAllStates();
     }
 }

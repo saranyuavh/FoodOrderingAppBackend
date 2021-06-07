@@ -14,7 +14,7 @@ import java.io.Serializable;
 import java.time.ZonedDateTime;
 
 @Entity
-@Table(name = "user_auth")
+@Table(name = "customer_auth")
 @NamedQueries({
         @NamedQuery(name = "userAuthTokenByAccessToken", query = "select ut from CustomerAuthEntity ut where ut.accessToken = :accessToken ")
 })
