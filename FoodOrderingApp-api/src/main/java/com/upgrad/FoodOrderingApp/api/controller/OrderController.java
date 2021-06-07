@@ -138,8 +138,15 @@ public class OrderController {
             RestaurantNotFoundException, ItemNotFoundException {
 
         String authToken = authorization.split( " ")[1];
-
-        final OrdersEntity savedOrderEntity = orderService.saveOrder(saveOrderRequest, authToken);
+        List<OrderItemEntity> ordersEntityList = new ArrayList<>();
+        for (ItemQuantity itemQuantity : saveOrderRequest.getItemQuantities()) {
+            OrderItemEntity orderItemEntity = new OrderItemEntity();
+            orderItemEntity.setItem(itemService.getItemEntityByUuid(itemQuantity.getItemId().toString()));
+            orderItemEntity.setQuantity(itemQuantity.getQuantity());
+            orderItemEntity.setPrice(itemQuantity.getPrice());
+            ordersEntityList.add(orderItemEntity);
+        }
+        final OrdersEntity savedOrderEntity = orderService.saveOrder(saveOrderRequest.getAddressId(),saveOrderRequest.getCouponId().toString(), saveOrderRequest.getAddressId(), saveOrderRequest.getPaymentId().toString(),saveOrderRequest.getBill(),saveOrderRequest.getDiscount(),ordersEntityList, authToken);
 
         SaveOrderResponse saveOrderResponse = new SaveOrderResponse().id(savedOrderEntity.getUuid())
                 .status("ORDER SUCCESSFULLY PLACED");

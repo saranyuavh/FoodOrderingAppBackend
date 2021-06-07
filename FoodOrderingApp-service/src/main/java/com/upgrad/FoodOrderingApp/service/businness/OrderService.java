@@ -1,7 +1,5 @@
 package com.upgrad.FoodOrderingApp.service.businness;
 
-import com.upgrad.FoodOrderingApp.api.model.ItemQuantity;
-import com.upgrad.FoodOrderingApp.api.model.SaveOrderRequest;
 import com.upgrad.FoodOrderingApp.service.dao.AddressDAO;
 import com.upgrad.FoodOrderingApp.service.dao.OrderDAO;
 import com.upgrad.FoodOrderingApp.service.dao.OrderItemDAO;
@@ -11,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -59,7 +58,7 @@ public class OrderService {
     }
 
     @Transactional
-    public OrdersEntity saveOrder(final SaveOrderRequest saveOrderRequest, final String authorizationToken)
+    public OrdersEntity saveOrder(String addressId, String couponId, String restaurantId, String paymentId, BigDecimal bill,BigDecimal discount,List<OrderItemEntity> orderItemEntityList, final String authorizationToken)
             throws AuthorizationFailedException, CouponNotFoundException, AddressNotFoundException,
             PaymentMethodNotFoundException, RestaurantNotFoundException, ItemNotFoundException {
 
@@ -67,13 +66,13 @@ public class OrderService {
 
         CustomerEntity customerEntity = customerService.getCustomer(authorizationToken);
 
-        AddressEntity addressEntity = addressService.getAddressByUUID(saveOrderRequest.getAddressId(), customerEntity);
+        AddressEntity addressEntity = addressService.getAddressByUUID(addressId, customerEntity);
 
-        CouponEntity couponEntity = getCouponByUuid(saveOrderRequest.getCouponId().toString());
+        CouponEntity couponEntity = getCouponByUuid(couponId);
 
-        RestaurantEntity restaurantEntity = restaurantService.getRestaurantByUUId(saveOrderRequest.getRestaurantId().toString());
+        RestaurantEntity restaurantEntity = restaurantService.getRestaurantByUUId(restaurantId.toString());
 
-        PaymentEntity paymentEntity = paymentService.getPaymentByUuid(saveOrderRequest.getPaymentId().toString());
+        PaymentEntity paymentEntity = paymentService.getPaymentByUuid(paymentId);
 
         if (couponEntity == null) {
             throw new CouponNotFoundException("CPF-002", "No coupon by this id");
@@ -93,19 +92,14 @@ public class OrderService {
         ordersEntity.setRestaurant(restaurantEntity);
         ordersEntity.setCustomer(customerEntity);
         ordersEntity.setAddress(addressEntity);
-        ordersEntity.setBill(saveOrderRequest.getBill());
-        ordersEntity.setDiscount(saveOrderRequest.getDiscount());
+        ordersEntity.setBill(bill);
+        ordersEntity.setDiscount(discount);
         ordersEntity.setDate(now);
 
         OrdersEntity savedOrderEntity = orderDao.saveOrder(ordersEntity);
 
-        for (ItemQuantity itemQuantity : saveOrderRequest.getItemQuantities()) {
-            OrderItemEntity orderItemEntity = new OrderItemEntity();
+        for (OrderItemEntity orderItemEntity :orderItemEntityList) {
             orderItemEntity.setOrders(savedOrderEntity);
-            orderItemEntity.setItem(itemService.getItemEntityByUuid(itemQuantity.getItemId().toString()));
-            orderItemEntity.setQuantity(itemQuantity.getQuantity());
-            orderItemEntity.setPrice(itemQuantity.getPrice());
-
             orderItemDAO.createOrderItemEntity(orderItemEntity);
         }
 
