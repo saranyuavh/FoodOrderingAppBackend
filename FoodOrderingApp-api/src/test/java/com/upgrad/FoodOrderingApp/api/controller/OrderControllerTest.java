@@ -34,6 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 public class OrderControllerTest {
+    /*
     @Autowired
     private MockMvc mockMvc;
 
@@ -608,5 +609,5 @@ public class OrderControllerTest {
                 orderDate, paymentEntity, customerEntity, addressEntity, restaurantEntity);
     }
 
-
+*/
 }

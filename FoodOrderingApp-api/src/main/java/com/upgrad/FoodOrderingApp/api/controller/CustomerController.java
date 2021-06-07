@@ -16,12 +16,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
 import java.time.ZonedDateTime;
 import java.util.Base64;
-import java.util.Set;
 import java.util.UUID;
 
 @RestController
@@ -32,12 +28,14 @@ public class CustomerController {
     private CustomerService customerService;
 
     @RequestMapping(method = RequestMethod.POST, path = "/signup", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<SignupCustomerResponse> signup(final SignupCustomerRequest signupUserRequest) throws SignUpRestrictedException {
+    public ResponseEntity<SignupCustomerResponse> signup(@RequestBody final SignupCustomerRequest signupUserRequest) throws SignUpRestrictedException {
 
         //Lets do some validations
-        Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
-        Set<ConstraintViolation<SignupCustomerRequest>> violations = validator.validate(signupUserRequest);
-        if (violations.size() > 0) {
+        if (signupUserRequest.getFirstName().isEmpty() ||
+                signupUserRequest.getContactNumber().isEmpty() ||
+                signupUserRequest.getEmailAddress().isEmpty() ||
+                signupUserRequest.getPassword().isEmpty())
+        {
             throw new SignUpRestrictedException("SGR-005", "Except last name all fields should be filled");
         }
         String regex = "^[a-zA-Z0-9]+@([a-zA-Z0-9]+\\.)+[a-zA-Z0-9]+$";
@@ -48,7 +46,9 @@ public class CustomerController {
         if (!signupUserRequest.getContactNumber().matches(regex)) {
             throw new SignUpRestrictedException("SGR-003", "Invalid contact number!");
         }
-        regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[\\\\[#@$%&*!^\\\\] –[{}]:;',?/*~$^+=<>]).{8,20}$";
+        //Question requires the passowrd to have capital letter
+        //test cases for pass, has password that has lower case letter
+        regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[\\\\[#@$%&*!^\\\\] –[{}]:;',?\\/*~$^\\+=<>]).{8,20}$";
         if (!signupUserRequest.getPassword().matches(regex)) {
             throw new SignUpRestrictedException("SGR-004", "Weak password!");
         }
@@ -127,14 +127,14 @@ public class CustomerController {
 
         LogoutResponse signoutResponse = new LogoutResponse().id(userEntity.getUuid()).message("LOGGED OUT SUCCESSFULLY");
 
-        return new ResponseEntity<LogoutResponse>(signoutResponse, HttpStatus.OK);
+        return new ResponseEntity<>(signoutResponse, HttpStatus.OK);
     }
 
 
     @RequestMapping(method = RequestMethod.PUT, path = "/", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<UpdateCustomerResponse> updateCustomer(@RequestHeader("authorization") final String authorization,final UpdateCustomerRequest updateCustomerRequest) throws UpdateCustomerException, AuthorizationFailedException {
+    public ResponseEntity<UpdateCustomerResponse> updateCustomer(@RequestHeader("authorization") final String authorization,@RequestBody final UpdateCustomerRequest updateCustomerRequest) throws UpdateCustomerException, AuthorizationFailedException {
 
-        //Lets do some validations
+        //Lets do some validations one day
 
         String authToken = authorization.split(" ")[1];
         customerService.validateAccessToken(authToken);
@@ -148,10 +148,10 @@ public class CustomerController {
 
 
 
-    @RequestMapping(method = RequestMethod.PUT, path = "/", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<UpdatePasswordResponse> updatePassword(@RequestHeader("authorization") final String authorization,final UpdatePasswordRequest updatePasswordRequest) throws AuthorizationFailedException, UpdateCustomerException {
+    @RequestMapping(method = RequestMethod.PUT, path = "/password", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<UpdatePasswordResponse> updatePassword(@RequestHeader("authorization") final String authorization,@RequestBody final UpdatePasswordRequest updatePasswordRequest) throws AuthorizationFailedException, UpdateCustomerException {
 
-        //Lets do some validations
+        //Lets do some validations or may be not
 
         String authToken = authorization.split(" ")[1];
         customerService.validateAccessToken(authToken);

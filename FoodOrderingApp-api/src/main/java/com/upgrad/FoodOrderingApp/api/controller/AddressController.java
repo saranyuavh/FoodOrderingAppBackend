@@ -16,12 +16,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 @RestController
@@ -38,13 +34,15 @@ public class AddressController {
     private StateService stateService;
 
     @RequestMapping(method = RequestMethod.POST, path = "/", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<SaveAddressResponse> saveAddress(@RequestHeader("authorization") final String authorization, final SaveAddressRequest saveAddressRequest) throws AuthorizationFailedException, SaveAddressException, AddressNotFoundException {
+    public ResponseEntity<SaveAddressResponse> saveAddress(@RequestHeader("authorization") final String authorization,@RequestBody final SaveAddressRequest saveAddressRequest) throws AuthorizationFailedException, SaveAddressException, AddressNotFoundException {
         String authToken = authorization.split(" ")[1];
         customerService.validateAccessToken(authToken);
         //Lets do some validations
-        Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
-        Set<ConstraintViolation<SaveAddressRequest>> violations = validator.validate(saveAddressRequest);
-        if (violations.size() > 0) {
+        if( saveAddressRequest.getPincode().isEmpty()   ||
+                saveAddressRequest.getCity().isEmpty() ||
+                saveAddressRequest.getLocality().isEmpty() ||
+                saveAddressRequest.getFlatBuildingName().isEmpty()
+        ){
             throw new SaveAddressException("SAR-001", "No field can be empty");
         }
         String regex = "^\\d{1,6}$";
