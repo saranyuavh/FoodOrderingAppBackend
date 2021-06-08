@@ -139,9 +139,7 @@ public class CustomerService {
 
     public CustomerEntity updateCustomerPassword(String oldPwd, String newPwd, CustomerEntity customerEntity) throws UpdateCustomerException {
 
-        if( oldPwd.isEmpty() || newPwd.isEmpty()){
-            throw new UpdateCustomerException("UCR-003","No field should be empty");
-        }
+
         String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[\\\\[#@$%&*!^\\\\] –[{}]:;',?/*~$^+=<>]).{8,20}$";
         if (!newPwd.matches(regex)) {
             throw new UpdateCustomerException("UCR-001", "Weak password!");
