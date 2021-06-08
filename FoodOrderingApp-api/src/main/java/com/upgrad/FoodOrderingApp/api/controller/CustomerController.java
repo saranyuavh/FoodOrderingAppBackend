@@ -125,11 +125,7 @@ public class CustomerController {
         if(updateCustomerRequest.getFirstName().isEmpty()){
             throw new UpdateCustomerException("UCR-002","First name field should not be empty");
         }
-        CustomerAuthEntity customerAuthEntity =customerService.logout(authToken);
-        if(customerAuthEntity== null) {
-            throw new AuthorizationFailedException("ATHR-001", "This shouldnt get thrown");
-        }
-        CustomerEntity customerEntity = customerAuthEntity.getCustomer();
+        CustomerEntity customerEntity = customerService.getCustomer(authToken);
         customerEntity.setFirstName(updateCustomerRequest.getFirstName());
         customerEntity.setLastName(updateCustomerRequest.getLastName());
         final CustomerEntity updatedCustomer = customerService.updateCustomer(customerEntity);
