@@ -69,7 +69,7 @@ public class OrderController {
 
         customerService.validateAccessToken(authToken);
 
-        CustomerEntity customerEntity = customerService .getCustomerByAuthToken(authToken);
+        CustomerEntity customerEntity = customerService .getCustomer(authToken);
 
         final List<OrderEntity> orderEntityList = orderService.getOrdersByCustomers(customerEntity.getUuid());
 
@@ -150,7 +150,7 @@ public class OrderController {
 
         customerService.validateAccessToken(authToken);
 
-        CustomerEntity customerEntity = customerService.getCustomerByAuthToken(authToken);
+        CustomerEntity customerEntity = customerService.getCustomer(authToken);
 
         AddressEntity addressEntity = addressService.getAddressByUUID(saveOrderRequest.getAddressId(), customerEntity);
 
