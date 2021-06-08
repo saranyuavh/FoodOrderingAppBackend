@@ -16,7 +16,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.ZonedDateTime;
 import java.util.Base64;
 import java.util.UUID;
 
@@ -38,22 +37,7 @@ public class CustomerController {
         {
             throw new SignUpRestrictedException("SGR-005", "Except last name all fields should be filled");
         }
-        String regex = "^[a-zA-Z0-9]+@([a-zA-Z0-9]+\\.)+[a-zA-Z0-9]+$";
-        if (!signupUserRequest.getEmailAddress().matches(regex)) {
-            throw new SignUpRestrictedException("SGR-002", "Invalid email-id format!");
-        }
-        regex = "^\\d{10}$";
-        if (!signupUserRequest.getContactNumber().matches(regex)) {
-            throw new SignUpRestrictedException("SGR-003", "Invalid contact number!");
-        }
-        //Question requires the passowrd to have capital letter
-        //test cases for pass, has password that has lower case letter
-        regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[\\\\[#@$%&*!^\\\\] –[{}]:;',?\\/*~$^\\+=<>]).{8,20}$";
-        if (!signupUserRequest.getPassword().matches(regex)) {
-            throw new SignUpRestrictedException("SGR-004", "Weak password!");
-        }
-
-        final CustomerEntity customerEntity = new CustomerEntity();
+       final CustomerEntity customerEntity = new CustomerEntity();
         customerEntity.setUuid(UUID.randomUUID().toString());
         customerEntity.setFirstName(signupUserRequest.getFirstName());
         customerEntity.setLastName(signupUserRequest.getLastName());
@@ -96,9 +80,6 @@ public class CustomerController {
         } else {
             throw new AuthenticationFailedException("ATH-003","Incorrect format of decoded customer name and password");
         }
-        if (!customerService.contactExists(contact)) {
-            throw new AuthenticationFailedException("ATH-001","This contact number has not been registered!");
-        }
         CustomerAuthEntity customerAuthEntity = customerService.authenticate(contact,passowrd);
         CustomerEntity user = customerAuthEntity.getCustomer();
 
@@ -111,21 +92,19 @@ public class CustomerController {
 
     @RequestMapping(method = RequestMethod.POST, path = "/logout", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<LogoutResponse> logout(@RequestHeader("authorization") final String authorization) throws AuthorizationFailedException {
-
-        CustomerAuthEntity authEntity = customerService.getCustomerAccessToken(authorization);
-        if (authEntity == null ){
-            throw new AuthorizationFailedException("ATHR-001", "Customer is not Logged in.");
+        String [] authEncoded = authorization.split("Bearer ");
+        String authToken = "";
+        if (authEncoded.length > 1) {
+            authToken = authEncoded[1];
+        } else {
+            authToken="nonexistant";
         }
-        final CustomerEntity userEntity = authEntity.getCustomer();
-        if (authEntity.getLogoutAt().isBefore(ZonedDateTime.now())){
-            throw new AuthorizationFailedException("ATHR-002", "Customer is logged out. Log in again to access this endpoint.");
+        CustomerAuthEntity customerAuthEntity =customerService.logout(authToken);
+        if(customerAuthEntity== null) {
+            throw new AuthorizationFailedException("ATHR-001", "This shouldnt get thrown");
         }
-
-        if(authEntity.getExpiresAt().isBefore(ZonedDateTime.now())){
-            throw new AuthorizationFailedException("ATHR-003", "Your session is expired. Log in again to access this endpoint.");
-        }
-
-        LogoutResponse signoutResponse = new LogoutResponse().id(userEntity.getUuid()).message("LOGGED OUT SUCCESSFULLY");
+        CustomerEntity customerEntity = customerAuthEntity.getCustomer();
+        LogoutResponse signoutResponse = new LogoutResponse().id(customerEntity.getUuid()).message("LOGGED OUT SUCCESSFULLY");
 
         return new ResponseEntity<>(signoutResponse, HttpStatus.OK);
     }
@@ -137,8 +116,8 @@ public class CustomerController {
         //Lets do some validations one day
 
         String authToken = authorization.split(" ")[1];
-        customerService.validateAccessToken(authToken);
-        CustomerEntity customerEntity =  customerService.getCustomerAccessToken(authorization).getCustomer();
+
+        CustomerEntity customerEntity =  customerService.getCustomer(authToken);
         customerEntity.setFirstName(updateCustomerRequest.getFirstName());
         customerEntity.setLastName(updateCustomerRequest.getLastName());
         final CustomerEntity updatedCustomer = customerService.updateCustomer(customerEntity);
@@ -154,9 +133,7 @@ public class CustomerController {
         //Lets do some validations or may be not
 
         String authToken = authorization.split(" ")[1];
-        customerService.validateAccessToken(authToken);
-
-        CustomerEntity customerEntity = customerService.getCustomerByAuthToken(authToken);
+        CustomerEntity customerEntity =  customerService.getCustomer(authToken);
         final CustomerEntity updatedCustomer = customerService.updateCustomerPassword(updatePasswordRequest.getOldPassword(),updatePasswordRequest.getNewPassword(), customerEntity);
         UpdatePasswordResponse userResponse = new UpdatePasswordResponse().id(updatedCustomer.getUuid()).status("CUSTOMER PASSWORD UPDATED SUCCESSFULLY");
         return new ResponseEntity<>(userResponse, HttpStatus.OK);

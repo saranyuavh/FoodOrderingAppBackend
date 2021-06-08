@@ -4,7 +4,6 @@ import com.upgrad.FoodOrderingApp.service.dao.AddressDAO;
 import com.upgrad.FoodOrderingApp.service.dao.OrderDAO;
 import com.upgrad.FoodOrderingApp.service.dao.OrderItemDAO;
 import com.upgrad.FoodOrderingApp.service.entity.*;
-import com.upgrad.FoodOrderingApp.service.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +40,7 @@ public class OrderService {
 
     @Transactional
     public List<OrderEntity> getOrdersByCustomers(final String uuid) {
-        CustomerEntity customerEntity = customerService.getCustomer(uuid);
+        CustomerEntity customerEntity = customerService.getCustomerByUUID(uuid);
         return orderDao.getCustomerOrders(customerEntity);
     }
 

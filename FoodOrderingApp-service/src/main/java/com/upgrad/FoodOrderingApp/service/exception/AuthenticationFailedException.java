@@ -44,6 +44,7 @@ public class AuthenticationFailedException extends Exception {
         switch(code) {
             case "ATH-001" : return HttpStatus.UNAUTHORIZED;
             case "ATH-002" : return HttpStatus.UNAUTHORIZED;
+            case "ATH-003" : return HttpStatus.UNAUTHORIZED;
         }
         return HttpStatus.NOT_FOUND;
     }
