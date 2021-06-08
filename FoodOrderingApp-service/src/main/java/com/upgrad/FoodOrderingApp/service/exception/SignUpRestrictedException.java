@@ -42,15 +42,13 @@ public class SignUpRestrictedException extends Exception {
 
     public HttpStatus getHttpCode() {
         switch(code) {
-            case "ATH-001" : return HttpStatus.UNAUTHORIZED;
-            case "ATH-002" : return HttpStatus.UNAUTHORIZED;
             case "SGR-001" : return HttpStatus.BAD_REQUEST;
             case "SGR-002" : return HttpStatus.BAD_REQUEST;
             case "SGR-003" : return HttpStatus.BAD_REQUEST;
             case "SGR-004" : return HttpStatus.BAD_REQUEST;
             case "SGR-005" : return HttpStatus.BAD_REQUEST;
         }
-        return HttpStatus.NOT_FOUND;
+        return HttpStatus.BAD_REQUEST;
     }
 }
 
