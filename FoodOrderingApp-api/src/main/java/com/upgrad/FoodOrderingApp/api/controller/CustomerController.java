@@ -116,8 +116,14 @@ public class CustomerController {
         //Lets do some validations one day
 
         String authToken = authorization.split(" ")[1];
-
-        CustomerEntity customerEntity =  customerService.getCustomer(authToken);
+        if(updateCustomerRequest.getFirstName().isEmpty()){
+            throw new UpdateCustomerException("UCR-002","First name field should not be empty");
+        }
+        CustomerAuthEntity customerAuthEntity =customerService.logout(authToken);
+        if(customerAuthEntity== null) {
+            throw new AuthorizationFailedException("ATHR-001", "This shouldnt get thrown");
+        }
+        CustomerEntity customerEntity = customerAuthEntity.getCustomer();
         customerEntity.setFirstName(updateCustomerRequest.getFirstName());
         customerEntity.setLastName(updateCustomerRequest.getLastName());
         final CustomerEntity updatedCustomer = customerService.updateCustomer(customerEntity);
@@ -131,7 +137,9 @@ public class CustomerController {
     public ResponseEntity<UpdatePasswordResponse> updatePassword(@RequestHeader("authorization") final String authorization,@RequestBody final UpdatePasswordRequest updatePasswordRequest) throws AuthorizationFailedException, UpdateCustomerException {
 
         //Lets do some validations or may be not
-
+        if(updatePasswordRequest.getNewPassword().isEmpty() || updatePasswordRequest.getOldPassword().isEmpty()) {
+            throw new UpdateCustomerException("UCR-003", "No field should be empty");
+        }
         String authToken = authorization.split(" ")[1];
         CustomerEntity customerEntity =  customerService.getCustomer(authToken);
         final CustomerEntity updatedCustomer = customerService.updateCustomerPassword(updatePasswordRequest.getOldPassword(),updatePasswordRequest.getNewPassword(), customerEntity);
