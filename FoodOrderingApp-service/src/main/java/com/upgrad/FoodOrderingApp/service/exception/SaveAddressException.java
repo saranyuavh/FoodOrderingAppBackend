@@ -43,8 +43,9 @@ public class SaveAddressException extends Exception {
 
     public HttpStatus getHttpCode() {
         switch(code) {
-            case "ATH-001" : return HttpStatus.UNAUTHORIZED;
-            case "ATH-002" : return HttpStatus.UNAUTHORIZED;
+            case "SAR-001" : return HttpStatus.BAD_REQUEST;
+            case "SAR-002" : return HttpStatus.BAD_REQUEST;
+            case "ANF-002" : return HttpStatus.BAD_REQUEST;
         }
         return HttpStatus.NOT_FOUND;
     }
