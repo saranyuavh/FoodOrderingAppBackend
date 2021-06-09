@@ -4,9 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2187793b-e64d-48fa-93dc-77d9c32a3738" name="Default" comment="Addressing test cases problems">
+    <list default="true" id="2187793b-e64d-48fa-93dc-77d9c32a3738" name="Default" comment="All customer tests passed">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-api/src/main/java/com/upgrad/FoodOrderingApp/api/controller/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-api/src/main/java/com/upgrad/FoodOrderingApp/api/controller/CustomerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-api/src/main/java/com/upgrad/FoodOrderingApp/api/controller/AddressController.java" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-api/src/main/java/com/upgrad/FoodOrderingApp/api/controller/AddressController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-api/src/main/java/com/upgrad/FoodOrderingApp/api/controller/StatesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-api/src/main/java/com/upgrad/FoodOrderingApp/api/controller/StatesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-api/src/main/java/com/upgrad/FoodOrderingApp/api/exception/FoodOrderExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-api/src/main/java/com/upgrad/FoodOrderingApp/api/exception/FoodOrderExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-api/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-api/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-api/src/test/java/com/upgrad/FoodOrderingApp/api/controller/AddressControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-api/src/test/java/com/upgrad/FoodOrderingApp/api/controller/AddressControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-api/target/classes/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-api/target/classes/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/businness/AddressService.java" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/businness/AddressService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/businness/CustomerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/businness/CustomerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/dao/AddressDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/dao/AddressDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/entity/AddressEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/entity/AddressEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/entity/CustomerEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/entity/CustomerEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/exception/AddressNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/exception/AddressNotFoundException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/exception/AuthorizationFailedException.java" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/exception/AuthorizationFailedException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/exception/SaveAddressException.java" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/exception/SaveAddressException.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -219,7 +232,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1550834160886" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/FoodOrderingApp-api/src/main/java/com/upgrad/FoodOrderingApp/api/controller" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../quora-main" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/FoodOrderingApp-service/src/main/resources" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Modules" />
@@ -228,25 +241,27 @@
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\dev\iiitb\capstone9\FoodOrderingAppBackend\FoodOrderingApp-service\src\main\resources" />
+      <recent name="C:\Users\razi.akram\Downloads\FoodOrderingAppBackend\FoodOrderingApp-api\src\test\java\com\upgrad\FoodOrderingApp\api\controller" />
+      <recent name="C:\Users\razi.akram\Downloads\FoodOrderingAppBackend\FoodOrderingApp-api\src\main\resources\endpoints" />
+      <recent name="C:\Users\razi.akram\Documents\FoodOrderingAppBackend\FoodOrderingApp-api\src\test\java\com\upgrad\FoodOrderingApp\api\controller" />
+      <recent name="C:\Users\Admin\Documents\FoodOrderingAppBackend\FoodOrderingApp-service\src\main\java\com\upgrad\FoodOrderingApp\service\exception" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\dev\iiitb\capstone9\FoodOrderingAppBackend\FoodOrderingApp-service\src\main\resources" />
       <recent name="C:\Users\Admin\Documents\FoodOrderingAppBackend\FoodOrderingApp-db\src\main\resources\config" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.upgrad.FoodOrderingApp.api" />
       <recent name="com.upgrad.FoodOrderingApp.api.controller" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.upgrad.FoodOrderingApp.service.exception" />
       <recent name="com.upgrad.FoodOrderingApp.api.config" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\razi.akram\Downloads\FoodOrderingAppBackend\FoodOrderingApp-api\src\test\java\com\upgrad\FoodOrderingApp\api\controller" />
-      <recent name="C:\Users\razi.akram\Downloads\FoodOrderingAppBackend\FoodOrderingApp-api\src\main\resources\endpoints" />
-      <recent name="C:\Users\razi.akram\Documents\FoodOrderingAppBackend\FoodOrderingApp-api\src\test\java\com\upgrad\FoodOrderingApp\api\controller" />
-      <recent name="C:\Users\Admin\Documents\FoodOrderingAppBackend\FoodOrderingApp-service\src\main\java\com\upgrad\FoodOrderingApp\service\exception" />
-      <recent name="C:\Users\Admin\Documents\FoodOrderingAppBackend\FoodOrderingApp-api\src\main\java\com\upgrad\FoodOrderingApp\api\config" />
-    </key>
   </component>
-  <component name="RunManager" selected="JUnit.CustomerControllerTest">
+  <component name="RunManager" selected="JUnit.AddressControllerTest">
     <configuration default="true" type="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <method v="2">
@@ -270,6 +285,38 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="AddressControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="FoodOrderingApp-api" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.upgrad.FoodOrderingApp.api.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.upgrad.FoodOrderingApp.api.controller" />
+      <option name="MAIN_CLASS_NAME" value="com.upgrad.FoodOrderingApp.api.controller.AddressControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AddressTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="FoodOrderingApp-api" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.upgrad.FoodOrderingApp.api.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.upgrad.FoodOrderingApp.api.controller" />
+      <option name="MAIN_CLASS_NAME" value="com.upgrad.FoodOrderingApp.api.controller.AddressTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="CustomerControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="FoodOrderingApp-api" />
       <extension name="coverage">
@@ -281,23 +328,6 @@
       <option name="PACKAGE_NAME" value="com.upgrad.FoodOrderingApp.api.controller" />
       <option name="MAIN_CLASS_NAME" value="com.upgrad.FoodOrderingApp.api.controller.CustomerControllerTest" />
       <option name="TEST_OBJECT" value="class" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CustomerControllerTest.shouldNotUpdateCustomerDetailsIfFirstNameNotPresentInTheRequest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="FoodOrderingApp-api" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.upgrad.FoodOrderingApp.api.controller.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.upgrad.FoodOrderingApp.api.controller" />
-      <option name="MAIN_CLASS_NAME" value="com.upgrad.FoodOrderingApp.api.controller.CustomerControllerTest" />
-      <option name="METHOD_NAME" value="shouldNotUpdateCustomerDetailsIfFirstNameNotPresentInTheRequest" />
-      <option name="TEST_OBJECT" value="method" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -320,40 +350,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CustomerControllerTest.shouldNotUpdateCustomerPasswordIfNewPasswordIsEmpty" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="FoodOrderingApp-api" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.upgrad.FoodOrderingApp.api.controller.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.upgrad.FoodOrderingApp.api.controller" />
-      <option name="MAIN_CLASS_NAME" value="com.upgrad.FoodOrderingApp.api.controller.CustomerControllerTest" />
-      <option name="METHOD_NAME" value="shouldNotUpdateCustomerPasswordIfNewPasswordIsEmpty" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CustomerControllerTest.shouldUpdateCustomerDetails" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="FoodOrderingApp-api" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.upgrad.FoodOrderingApp.api.controller.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.upgrad.FoodOrderingApp.api.controller" />
-      <option name="MAIN_CLASS_NAME" value="com.upgrad.FoodOrderingApp.api.controller.CustomerControllerTest" />
-      <option name="METHOD_NAME" value="shouldUpdateCustomerDetails" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <option name="TEST_OBJECT" value="class" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
@@ -365,6 +361,19 @@
       <module name="FoodOrderingApp-api" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.upgrad.FoodOrderingApp.api.FoodOrderingAppApiApplication" />
       <option name="ALTERNATIVE_JRE_PATH" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ServiceRunnerSandbox" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="FoodOrderingApp-api" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.upgrad.FoodOrderingApp.api.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.upgrad.FoodOrderingApp.api.ServiceRunnerSandbox" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -388,20 +397,20 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="JUnit.CustomerControllerTest.shouldUpdateCustomerDetails" />
       <item itemvalue="Spring Boot.API" />
-      <item itemvalue="JUnit.CustomerControllerTest.shouldNotUpdateCustomerDetailsIfFirstNameNotPresentInTheRequest" />
       <item itemvalue="JUnit.CustomerControllerTest" />
       <item itemvalue="JUnit.CustomerControllerTest.shouldNotUpdateCustomerPasswordIfNewPasswordDoesNotFollowRecommendedPasswordFormat" />
-      <item itemvalue="JUnit.CustomerControllerTest.shouldNotUpdateCustomerPasswordIfNewPasswordIsEmpty" />
+      <item itemvalue="JUnit.AddressControllerTest" />
+      <item itemvalue="JUnit.AddressTests" />
+      <item itemvalue="Spring Boot.ServiceRunnerSandbox" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.AddressControllerTest" />
         <item itemvalue="JUnit.CustomerControllerTest" />
+        <item itemvalue="Spring Boot.ServiceRunnerSandbox" />
+        <item itemvalue="JUnit.AddressTests" />
         <item itemvalue="JUnit.CustomerControllerTest.shouldNotUpdateCustomerPasswordIfNewPasswordDoesNotFollowRecommendedPasswordFormat" />
-        <item itemvalue="JUnit.CustomerControllerTest.shouldNotUpdateCustomerPasswordIfNewPasswordIsEmpty" />
-        <item itemvalue="JUnit.CustomerControllerTest.shouldNotUpdateCustomerDetailsIfFirstNameNotPresentInTheRequest" />
-        <item itemvalue="JUnit.CustomerControllerTest.shouldUpdateCustomerDetails" />
       </list>
     </recent_temporary>
   </component>
@@ -437,7 +446,7 @@
       <workItem from="1622872291874" duration="9206000" />
       <workItem from="1623048866835" duration="2710000" />
       <workItem from="1623053694272" duration="21593000" />
-      <workItem from="1623133566848" duration="7952000" />
+      <workItem from="1623133566848" duration="30056000" />
     </task>
     <task id="LOCAL-00001" summary="Updated config and edits">
       <created>1622278092936</created>
@@ -635,7 +644,14 @@
       <option name="project" value="LOCAL" />
       <updated>1623141553966</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="All customer tests passed">
+      <created>1623142209991</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1623142209991</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -783,14 +799,15 @@
     <MESSAGE value="Code refactoring" />
     <MESSAGE value="Code refactoring aligning to test cases" />
     <MESSAGE value="Addressing test cases problems" />
-    <option name="LAST_COMMIT_MESSAGE" value="Addressing test cases problems" />
+    <MESSAGE value="All customer tests passed" />
+    <option name="LAST_COMMIT_MESSAGE" value="All customer tests passed" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/businness/CustomerService.java</url>
-          <line>160</line>
+          <line>168</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -804,11 +821,6 @@
           <option name="timeStamp" value="31" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/businness/CustomerService.java</url>
-          <line>170</line>
-          <option name="timeStamp" value="39" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/FoodOrderingApp-api/src/test/java/com/upgrad/FoodOrderingApp/api/controller/CustomerControllerTest.java</url>
           <line>311</line>
           <option name="timeStamp" value="51" />
@@ -817,6 +829,41 @@
           <url>file://$PROJECT_DIR$/FoodOrderingApp-api/src/main/java/com/upgrad/FoodOrderingApp/api/controller/CustomerController.java</url>
           <line>116</line>
           <option name="timeStamp" value="53" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/FoodOrderingApp-api/src/main/java/com/upgrad/FoodOrderingApp/api/ServiceRunnerSandbox.java</url>
+          <line>29</line>
+          <option name="timeStamp" value="67" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/entity/AddressEntity.java</url>
+          <line>73</line>
+          <option name="timeStamp" value="68" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/entity/CustomerEntity.java</url>
+          <line>77</line>
+          <option name="timeStamp" value="70" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/FoodOrderingApp-api/src/test/java/com/upgrad/FoodOrderingApp/api/controller/AddressControllerTest.java</url>
+          <line>316</line>
+          <option name="timeStamp" value="71" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/FoodOrderingApp-api/src/test/java/com/upgrad/FoodOrderingApp/api/controller/AddressControllerTest.java</url>
+          <line>313</line>
+          <option name="timeStamp" value="72" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/businness/CustomerService.java</url>
+          <line>184</line>
+          <option name="timeStamp" value="75" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/FoodOrderingApp-api/src/main/java/com/upgrad/FoodOrderingApp/api/controller/AddressController.java</url>
+          <line>53</line>
+          <option name="timeStamp" value="78" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

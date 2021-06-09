@@ -45,8 +45,9 @@ public class AuthorizationFailedException extends Exception {
             case "ATHR-001" : return HttpStatus.FORBIDDEN;
             case "ATHR-002" : return HttpStatus.FORBIDDEN;
             case "ATHR-003" : return HttpStatus.FORBIDDEN;
+            case "ATHR-004" : return HttpStatus.FORBIDDEN;
         }
-        return HttpStatus.NOT_FOUND;
+        return HttpStatus.FORBIDDEN;
     }
 }
 

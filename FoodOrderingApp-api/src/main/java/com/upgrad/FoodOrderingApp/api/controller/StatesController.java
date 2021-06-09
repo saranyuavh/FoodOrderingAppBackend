@@ -16,12 +16,11 @@ import java.util.UUID;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/states")
 public class StatesController {
     @Autowired
     private AddressService addressService;
 
-    @RequestMapping(method = RequestMethod.GET, path = "/", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(method = RequestMethod.GET, path = "/states", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<StatesListResponse> getAllStates() {
 
         List<StateEntity> states = addressService.getAllStates();
@@ -33,7 +32,9 @@ public class StatesController {
             stateList.add(stateTmp);
         }
         StatesListResponse response = new StatesListResponse();
-        response.setStates(stateList);
+        if(stateList.size()>0) {
+            response.setStates(stateList);
+        }
         return new ResponseEntity<StatesListResponse>(response, HttpStatus.OK);
     }
 

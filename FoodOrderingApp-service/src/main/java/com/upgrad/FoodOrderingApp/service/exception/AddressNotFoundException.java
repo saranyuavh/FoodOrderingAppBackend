@@ -42,8 +42,11 @@ public class AddressNotFoundException extends Exception {
 
     public HttpStatus getHttpCode() {
         switch(code) {
-            case "ATH-001" : return HttpStatus.UNAUTHORIZED;
-            case "ATH-002" : return HttpStatus.UNAUTHORIZED;
+            case "ANF-001" : return HttpStatus.NOT_FOUND;
+            case "ANF-002" : return HttpStatus.NOT_FOUND;
+            case "ANF-003" : return HttpStatus.NOT_FOUND;
+            case "ANF-004" : return HttpStatus.NOT_FOUND;
+            case "ANF-005" : return HttpStatus.NOT_FOUND;
         }
         return HttpStatus.NOT_FOUND;
     }
