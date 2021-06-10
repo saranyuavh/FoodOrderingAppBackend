@@ -43,5 +43,19 @@ public class FoodOrderExceptionHandler {
         );
     }
 
+    @ExceptionHandler(SaveAddressException.class)
+    public ResponseEntity<ErrorResponse> resourceNotFoundException(SaveAddressException exe, WebRequest request) {
+        return new ResponseEntity<ErrorResponse>(
+                new ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()), exe.getHttpCode()
+        );
+    }
+
+    @ExceptionHandler(AddressNotFoundException.class)
+    public ResponseEntity<ErrorResponse> resourceNotFoundException(AddressNotFoundException exe, WebRequest request) {
+        return new ResponseEntity<ErrorResponse>(
+                new ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()), exe.getHttpCode()
+        );
+    }
+
 }
 
