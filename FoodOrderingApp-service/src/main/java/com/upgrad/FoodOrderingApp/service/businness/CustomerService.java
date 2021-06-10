@@ -126,7 +126,7 @@ public class CustomerService {
     private void validateAccessTokenEntity(CustomerAuthEntity authEntity) throws AuthorizationFailedException {
 
         final ZonedDateTime now = ZonedDateTime.now();
-
+        System.out.println(authEntity);
         if (authEntity == null) {
             throw new AuthorizationFailedException("ATHR-001", "Customer is not Logged in.");
         } else if (authEntity.getLogoutAt() != null) {
@@ -183,6 +183,14 @@ public class CustomerService {
 
     public CustomerEntity getCustomerByAuthToken(String auth) throws AuthorizationFailedException {
         CustomerAuthEntity customerAuthEntity = customerDAO.getCustomerAuthToken(auth);
+        final ZonedDateTime now = ZonedDateTime.now();
+        if (customerAuthEntity == null) {
+            throw new AuthorizationFailedException("ATHR-001", "Customer is not Logged in.");
+        } else if (customerAuthEntity.getLogoutAt() != null) {
+            throw new AuthorizationFailedException("ATHR-002", "Customer is logged out. Log in again to access this endpoint.");
+        } else if (now.isAfter(customerAuthEntity.getExpiresAt())) {
+            throw new AuthorizationFailedException("ATHR-003", "Your session is expired. Log in again to access this endpoint.");
+        }
         this.validateAccessTokenEntity(customerAuthEntity);
         return customerAuthEntity.getCustomer();
     }

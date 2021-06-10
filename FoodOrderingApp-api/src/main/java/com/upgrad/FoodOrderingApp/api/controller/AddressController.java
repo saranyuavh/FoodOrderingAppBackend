@@ -23,7 +23,6 @@ import java.util.UUID;
 
 @RestController
 @CrossOrigin
-@RequestMapping("")
 public class AddressController {
     @Autowired
     private AddressService addressService;
@@ -35,7 +34,7 @@ public class AddressController {
     private StateService stateService;
 
     @RequestMapping(method = RequestMethod.POST, path = "/address", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<SaveAddressResponse> saveAddress(@RequestHeader("authorization") final String authorization,@RequestBody final SaveAddressRequest saveAddressRequest) throws AuthorizationFailedException, SaveAddressException, AddressNotFoundException {
+    public ResponseEntity<SaveAddressResponse> saveAddress(@RequestHeader("authorization") final String authorization,@RequestBody (required = false) final SaveAddressRequest saveAddressRequest) throws AuthorizationFailedException, SaveAddressException, AddressNotFoundException {
         String [] authEncoded = authorization.split("Bearer ");
         String authToken = "";
         if (authEncoded.length > 1) {
@@ -45,7 +44,7 @@ public class AddressController {
         }
         CustomerEntity customerEntity= customerService.getCustomerByAuthToken(authToken);
         StateEntity stateEntity= addressService.getStateByUUID(saveAddressRequest.getStateUuid());
-        //Lets do some validations
+        //Lets do some validations one day ... eventually
         AddressEntity addressEntity = new AddressEntity();
         addressEntity.setFlatBuilNo(saveAddressRequest.getFlatBuildingName());
         addressEntity.setLocality(saveAddressRequest.getLocality());
