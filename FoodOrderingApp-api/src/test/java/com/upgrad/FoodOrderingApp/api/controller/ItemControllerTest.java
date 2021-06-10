@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.UUID;
 
 import static com.upgrad.FoodOrderingApp.service.common.ItemType.NON_VEG;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -31,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 public class ItemControllerTest {
-    /*
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -66,7 +67,7 @@ public class ItemControllerTest {
         assertEquals(itemListResponse.get(0).getId().toString(), itemId);
 
     }
-
+/*
     //This test case passes when you have handled the exception of trying to fetch most popular items of a restaurant,
     // but the restaurant id you gave does not exist.
     @Test
