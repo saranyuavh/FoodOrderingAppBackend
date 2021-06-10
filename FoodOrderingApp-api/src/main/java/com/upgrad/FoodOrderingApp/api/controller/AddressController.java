@@ -101,8 +101,8 @@ public class AddressController {
         if(addressUuid.isEmpty()) {
             throw new AddressNotFoundException("ANF-005","Address id can not be empty");
         }
-        addressService.deleteAddress(addressEntity);
-        DeleteAddressResponse deleteAddressResponse = new DeleteAddressResponse().id(UUID.fromString(addressUuid)).status("ADDRESS DELETED SUCCESSFULLY");
+        UUID retUUID = UUID.fromString(addressService.deleteAddress(addressEntity).getUuid());
+        DeleteAddressResponse deleteAddressResponse = new DeleteAddressResponse().id(retUUID).status("ADDRESS DELETED SUCCESSFULLY");
         return new ResponseEntity<DeleteAddressResponse>(deleteAddressResponse, HttpStatus.OK);
     }
 
