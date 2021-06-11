@@ -40,15 +40,11 @@ public class CategoryController {
     @RequestMapping(method = RequestMethod.GET, path = "/category/{category_id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity getCategoryById(@PathVariable String category_id) throws CategoryNotFoundException {
 
-        if(category_id == null || category_id.isEmpty() || category_id.equalsIgnoreCase("\"\"")){
-            throw new CategoryNotFoundException("CNF-001", "Category id field should not be empty");
-        }
+
 
         CategoryEntity categoryEntity = categoryService.getCategoryEntityByUuid(category_id);
 
-        if(categoryEntity == null){
-            throw new CategoryNotFoundException("CNF-002", "No category by this id");
-        }
+
 
         CategoryDetailsResponse categoryDetailsResponse = new CategoryDetailsResponse();
         categoryDetailsResponse.setCategoryName(categoryEntity.getCategoryName());

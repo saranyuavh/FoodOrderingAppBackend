@@ -43,5 +43,11 @@ public class FoodOrderExceptionHandler {
         );
     }
 
+    @ExceptionHandler(CategoryNotFoundException.class)
+    public ResponseEntity<ErrorResponse> resourceNotFoundException(CategoryNotFoundException exe, WebRequest request) {
+        return new ResponseEntity<ErrorResponse>(
+                new ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()), exe.getHttpCode()
+        );
+    }
 }
 

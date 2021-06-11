@@ -44,6 +44,8 @@ public class CategoryNotFoundException extends Exception {
         switch(code) {
             case "ATH-001" : return HttpStatus.UNAUTHORIZED;
             case "ATH-002" : return HttpStatus.UNAUTHORIZED;
+            case "CNF-001" : return HttpStatus.NOT_FOUND;
+            case "CNF-002" : return HttpStatus.NOT_FOUND;
         }
         return HttpStatus.NOT_FOUND;
     }
