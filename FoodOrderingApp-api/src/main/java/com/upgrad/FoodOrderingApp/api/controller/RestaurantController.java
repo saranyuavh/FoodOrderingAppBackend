@@ -101,15 +101,8 @@ public class RestaurantController {
     @RequestMapping(method = RequestMethod.GET, path = "/restaurant/{restaurant_id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity getRestaurantByUUId(@PathVariable String restaurant_id) throws RestaurantNotFoundException {
 
-        if(restaurant_id == null || restaurant_id.isEmpty() || restaurant_id.equalsIgnoreCase("\"\"")){
-            throw new RestaurantNotFoundException("RNF-002", "Restaurant id field should not be empty");
-        }
 
         final RestaurantEntity restaurant = restaurantService.restaurantByUUID(restaurant_id);
-
-        if(restaurant == null){
-            throw new RestaurantNotFoundException("RNF-001", "No restaurant by this id");
-        }
 
         RestaurantDetailsResponse restaurantDetailsResponse = new RestaurantDetailsResponse();
         restaurantDetailsResponse.setId(UUID.fromString(restaurant.getUuid()));

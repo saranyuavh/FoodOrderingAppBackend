@@ -49,5 +49,12 @@ public class FoodOrderExceptionHandler {
                 new ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()), exe.getHttpCode()
         );
     }
+
+    @ExceptionHandler(CategoryNotFoundException.class)
+    public ResponseEntity<ErrorResponse> resourceNotFoundException(RestaurantNotFoundException exe, WebRequest request) {
+        return new ResponseEntity<ErrorResponse>(
+                new ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()), exe.getHttpCode()
+        );
+    }
 }
 

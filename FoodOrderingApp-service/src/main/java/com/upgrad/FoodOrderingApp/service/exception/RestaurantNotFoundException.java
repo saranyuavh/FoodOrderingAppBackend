@@ -44,6 +44,8 @@ public class RestaurantNotFoundException extends Exception {
         switch(code) {
             case "ATH-001" : return HttpStatus.UNAUTHORIZED;
             case "ATH-002" : return HttpStatus.UNAUTHORIZED;
+            case "RNF-002" : return HttpStatus.NOT_FOUND;
+            case "RNF-001" : return HttpStatus.NOT_FOUND;
         }
         return HttpStatus.NOT_FOUND;
     }

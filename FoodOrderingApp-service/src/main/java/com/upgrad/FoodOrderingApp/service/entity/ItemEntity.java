@@ -12,7 +12,8 @@ import java.io.Serializable;
 @NamedQueries(
         {
                 @NamedQuery(name = "itemByUuid", query = "select i from ItemEntity i where i.uuid=:uuid"),
-                @NamedQuery(name = "itemById", query = "select i from ItemEntity i where i.id=:id")
+                @NamedQuery(name = "itemById", query = "select i from ItemEntity i where i.id=:id"),
+                @NamedQuery(name = "getItemById", query = "select ie from ItemEntity ie where ie.uuid =:uuid")
         }
 )
 

@@ -6,6 +6,7 @@ import com.upgrad.FoodOrderingApp.api.model.CategoryListResponse;
 import com.upgrad.FoodOrderingApp.api.model.ItemList;
 import com.upgrad.FoodOrderingApp.service.businness.CategoryService;
 import com.upgrad.FoodOrderingApp.service.entity.CategoryEntity;
+import com.upgrad.FoodOrderingApp.service.entity.ItemEntity;
 import com.upgrad.FoodOrderingApp.service.exception.CategoryNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -49,7 +50,9 @@ public class CategoryController {
         CategoryDetailsResponse categoryDetailsResponse = new CategoryDetailsResponse();
         categoryDetailsResponse.setCategoryName(categoryEntity.getCategoryName());
         categoryDetailsResponse.setId(UUID.fromString(categoryEntity.getUuid()));
-        List<ItemList> itemLists = ItemUtils.serialiseItemList(categoryEntity.getItemEntities());
+        List<ItemEntity> itemEntityList = new ArrayList<>();
+        itemEntityList = categoryService.getItemsById(categoryEntity);
+        List<ItemList> itemLists = ItemUtils.serialiseItemList(itemEntityList);
         categoryDetailsResponse.setItemList(itemLists);
 
         return new ResponseEntity<>(categoryDetailsResponse, HttpStatus.OK);

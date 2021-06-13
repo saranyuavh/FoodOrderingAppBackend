@@ -33,4 +33,12 @@ public class ItemDAO {
     }
 
 
+    public ItemEntity getItemById(String itemId) {
+        try {
+            return entityManager.createNamedQuery("getItemById", ItemEntity.class).setParameter("uuid", itemId).getSingleResult();
+        } catch (NoResultException nre) {
+            return null;
+        }
+    }
+
 }
