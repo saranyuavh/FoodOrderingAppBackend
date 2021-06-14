@@ -67,6 +67,7 @@ public class AddressService {
         return addressEntity;
     }
 
+    @Transactional
     public AddressEntity deleteAddress(AddressEntity addressEntity) {
         addressDAO.deleteAddress(addressEntity.getId());
         return addressEntity;
