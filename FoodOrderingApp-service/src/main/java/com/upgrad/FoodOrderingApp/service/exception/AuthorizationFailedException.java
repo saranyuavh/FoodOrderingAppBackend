@@ -1,7 +1,5 @@
 package com.upgrad.FoodOrderingApp.service.exception;
 
-import org.springframework.http.HttpStatus;
-
 import java.io.PrintStream;
 import java.io.PrintWriter;
 
@@ -40,13 +38,5 @@ public class AuthorizationFailedException extends Exception {
         return errorMessage;
     }
 
-    public HttpStatus getHttpCode() {
-        switch(code) {
-            case "ATHR-001" : return HttpStatus.FORBIDDEN;
-            case "ATHR-002" : return HttpStatus.FORBIDDEN;
-            case "ATHR-003" : return HttpStatus.FORBIDDEN;
-        }
-        return HttpStatus.NOT_FOUND;
-    }
 }
 

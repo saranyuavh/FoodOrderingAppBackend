@@ -30,9 +30,9 @@ public class JwtTokenProvider {
         final Date expiresAt = new Date(expiresDateTime.getLong(ChronoField.INSTANT_SECONDS));
 
         return JWT.create().withIssuer(TOKEN_ISSUER) //
-                .withKeyId(UUID.randomUUID().toString())
-                .withAudience(customerUuid) //
-                .withIssuedAt(issuedAt).withExpiresAt(expiresAt).sign(algorithm);
+            .withKeyId(UUID.randomUUID().toString())
+            .withAudience(customerUuid) //
+            .withIssuedAt(issuedAt).withExpiresAt(expiresAt).sign(algorithm);
     }
 
 }

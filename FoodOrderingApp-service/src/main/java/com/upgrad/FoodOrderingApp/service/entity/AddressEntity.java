@@ -1,7 +1,5 @@
 package com.upgrad.FoodOrderingApp.service.entity;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -50,12 +48,27 @@ public class AddressEntity implements Serializable {
     private String pincode;
 
     @ManyToOne
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "STATE_ID")
     private StateEntity state;
 
     @Column(name = "active")
     private Integer active;
+
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinTable(name = "customer_address",
+            joinColumns = @JoinColumn(name = "address_id", referencedColumnName = "id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false)
+    )
+    CustomerEntity customer;
+
+    public CustomerEntity getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(CustomerEntity customerEntity) {
+        this.customer = customerEntity;
+    }
+
 
     public Long getId() {
         return id;

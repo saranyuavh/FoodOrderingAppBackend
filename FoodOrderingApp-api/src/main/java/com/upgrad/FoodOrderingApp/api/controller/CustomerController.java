@@ -36,7 +36,7 @@ public class CustomerController {
         {
             throw new SignUpRestrictedException("SGR-005", "Except last name all fields should be filled");
         }
-       final CustomerEntity customerEntity = new CustomerEntity();
+        final CustomerEntity customerEntity = new CustomerEntity();
         customerEntity.setUuid(UUID.randomUUID().toString());
         customerEntity.setFirstName(signupUserRequest.getFirstName());
         customerEntity.setLastName(signupUserRequest.getLastName());

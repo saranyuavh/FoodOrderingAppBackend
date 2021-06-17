@@ -10,7 +10,7 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
-public class StateDAO {
+public class StateDao {
     @PersistenceContext
     private EntityManager entityManager;
 

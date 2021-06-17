@@ -1,6 +1,5 @@
 package com.upgrad.FoodOrderingApp.service.dao;
 
-import com.upgrad.FoodOrderingApp.service.entity.CategoryEntity;
 import com.upgrad.FoodOrderingApp.service.entity.ItemEntity;
 import org.springframework.stereotype.Repository;
 
@@ -9,36 +8,17 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 @Repository
-public class ItemDAO {
-
+public class ItemDao {
     @PersistenceContext
-    private EntityManager entityManager;
+    EntityManager entityManager;
 
-    public ItemEntity getItemById(final Integer itemId) {
+    public ItemEntity getItemById(String uuid) {
         try {
-            return entityManager.createNamedQuery("itemById", ItemEntity.class).setParameter("id", itemId)
-                    .getSingleResult();
+            return entityManager.createNamedQuery("ItemEntity.getItemById", ItemEntity.class)
+                .setParameter("uuid", uuid)
+                .getSingleResult();
         } catch (NoResultException nre) {
             return null;
         }
     }
-
-    public ItemEntity getItemByUuid(final String itemUuid) {
-        try {
-            return entityManager.createNamedQuery("itemByUuid", ItemEntity.class).setParameter("uuid", itemUuid)
-                    .getSingleResult();
-        } catch (NoResultException nre) {
-            return null;
-        }
-    }
-
-
-    public ItemEntity getItemById(String itemId) {
-        try {
-            return entityManager.createNamedQuery("getItemById", ItemEntity.class).setParameter("uuid", itemId).getSingleResult();
-        } catch (NoResultException nre) {
-            return null;
-        }
-    }
-
 }

@@ -8,7 +8,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 @Repository
-public class AddressDAO {
+public class AddressDao {
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -26,7 +26,7 @@ public class AddressDAO {
         return addressEntity;
     }
 
-    public AddressEntity getAddressByUuid(String uuid) {
+    public AddressEntity getAddressByUUID(String uuid) {
         try {
             return entityManager.createNamedQuery("addressByUuid", AddressEntity.class).setParameter("uuid", uuid)
                     .getSingleResult();

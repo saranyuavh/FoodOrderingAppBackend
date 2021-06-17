@@ -1,51 +1,58 @@
 package com.upgrad.FoodOrderingApp.service.businness;
 
-import com.upgrad.FoodOrderingApp.service.dao.CategoryDAO;
-import com.upgrad.FoodOrderingApp.service.dao.ItemDAO;
+import com.upgrad.FoodOrderingApp.service.dao.CategoryDao;
+import com.upgrad.FoodOrderingApp.service.dao.RestaurantDao;
 import com.upgrad.FoodOrderingApp.service.entity.CategoryEntity;
-import com.upgrad.FoodOrderingApp.service.entity.CategoryItemEntity;
-import com.upgrad.FoodOrderingApp.service.entity.ItemEntity;
+import com.upgrad.FoodOrderingApp.service.entity.RestaurantEntity;
 import com.upgrad.FoodOrderingApp.service.exception.CategoryNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import static com.upgrad.FoodOrderingApp.service.common.GenericErrorCode.CNF_001;
+import static com.upgrad.FoodOrderingApp.service.common.GenericErrorCode.CNF_002;
 
 @Service
 public class CategoryService {
 
     @Autowired
-    CategoryDAO categoryDAO;
+    private CategoryDao categoryDao;
 
     @Autowired
-    ItemDAO itemDAO;
+    private RestaurantDao restaurantDao;
 
-    public CategoryEntity getCategoryEntityByUuid(final String categoryUUId) throws CategoryNotFoundException{
-        if(categoryUUId == null || categoryUUId.isEmpty() || categoryUUId.equalsIgnoreCase("\"\"")){
-            throw new CategoryNotFoundException("CNF-001", "Category id field should not be empty");
+    public List<CategoryEntity> getCategoriesByRestaurant(String restaurantUuid) {
+        // Retrieve restaurantEntity from database
+        RestaurantEntity restaurantEntity = restaurantDao.getRestaurantByID(restaurantUuid);
+        // Retrieve CategoryEntity List from database
+        return categoryDao.getCategoriesByRestaurant(restaurantEntity);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public List<CategoryEntity> getAllCategoriesOrderedByName() {
+        return categoryDao.getAllCategories();
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public CategoryEntity getCategoryById(String categoryId) throws CategoryNotFoundException {
+
+        if (categoryId.equals("")) { // Throw error if categoryId is empty
+            throw new CategoryNotFoundException(CNF_001.getCode(), CNF_001.getDefaultMessage());
         }
-        CategoryEntity categoryEntity =  categoryDAO.getCategoryByUUId(categoryUUId);
-        if(categoryEntity == null){
-            throw new CategoryNotFoundException("CNF-002", "No category by this id");
+
+        // Retrieve categoryEntity from database
+        CategoryEntity categoryEntity = categoryDao.getCategoryById(categoryId);
+
+        if (categoryEntity == null) { // Throw error if category not found matching categoryId
+            throw new CategoryNotFoundException(CNF_002.getCode(), CNF_002.getDefaultMessage());
         }
+
         return categoryEntity;
     }
 
-    public List<CategoryEntity> getAllCategories() {
-        return categoryDAO.getAllCategories();
-    }
 
-    public List<ItemEntity> getItemsById(CategoryEntity categoryEntity) {
-        ItemEntity itemEntity = new ItemEntity();
-        List<ItemEntity> itemEntities = new ArrayList<>();
-        List<CategoryItemEntity>  categoryItemEntity = new ArrayList<>();
-        categoryItemEntity = categoryDAO.getItemByCategoryId(categoryEntity);
-        for (CategoryItemEntity ce: categoryItemEntity)
-        {
-            itemEntity = itemDAO.getItemById(ce.getItem().getUuid());
-            itemEntities.add(itemEntity);
-        }
-        return  itemEntities;
-    }
+
 }

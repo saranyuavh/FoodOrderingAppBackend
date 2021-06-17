@@ -63,23 +63,22 @@ public class CustomerEntity implements Serializable {
     @Size(max = 30)
     private String contactNumber;
 
-    public List<AddressEntity> getAddressEntities() {
-        return addressEntities;
-    }
-
-    public List<AddressEntity> getSortedAddresses() {
-        List<AddressEntity> sorted = new ArrayList<>(addressEntities);
-        sorted.sort(Comparator.comparing(AddressEntity::getId).reversed());
-        return sorted;
-    }
-
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(name = "customer_address",
             joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false),
             inverseJoinColumns = @JoinColumn(name = "address_id", referencedColumnName = "id", nullable = false)
     )
     private List<AddressEntity> addressEntities = new ArrayList<>();
 
+    public List<AddressEntity> getAddressEntities() {
+        return addressEntities;
+    }
+
+    public List<AddressEntity> getSortedAddresses() {
+        List<AddressEntity> sorted = new ArrayList<>(getAddressEntities());
+        sorted.sort(Comparator.comparing(AddressEntity::getId).reversed());
+        return sorted;
+    }
 
     public Integer getId() {
         return id;
@@ -163,7 +162,7 @@ public class CustomerEntity implements Serializable {
 
     public boolean hasAddress(String addressUuid) {
         for (AddressEntity addr: addressEntities
-             ) {
+        ) {
             if(addr.getUuid().equals(addressUuid))
                 return true;
         }

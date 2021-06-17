@@ -9,35 +9,23 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
-public class PaymentDAO {
+public class PaymentDao {
 
     @PersistenceContext
-    private EntityManager entityManager;
+    EntityManager entityManager;
 
-    public List<PaymentEntity> getPaymentMethods(){
+    public List<PaymentEntity> getAllPaymentMethods() {
+        return entityManager.createNamedQuery("PaymentModes.All", PaymentEntity.class).getResultList();
+    }
 
+    public PaymentEntity getPaymentByUUID(String uuid) {
         try {
-            return this.entityManager.createNamedQuery("allPaymentMethods", PaymentEntity.class).getResultList();
+            return entityManager.createNamedQuery("PaymentModes.getById", PaymentEntity.class)
+                .setParameter("uuid", uuid)
+                .getSingleResult();
         } catch (NoResultException nre) {
             return null;
         }
     }
 
-    public PaymentEntity getPaymentById(Long paymentId) {
-        try {
-            return this.entityManager.createNamedQuery("paymentById", PaymentEntity.class).setParameter("id", paymentId)
-                    .getSingleResult();
-        } catch (NoResultException nre) {
-            return null;
-        }
-    }
-
-    public PaymentEntity getPaymentByUuid(String uuid) {
-        try {
-            return this.entityManager.createNamedQuery("paymentByUuid", PaymentEntity.class).setParameter("uuid", uuid)
-                    .getSingleResult();
-        } catch (NoResultException nre) {
-            return null;
-        }
-    }
 }
