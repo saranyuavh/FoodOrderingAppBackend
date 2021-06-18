@@ -15,16 +15,16 @@ public class RestaurantDao {
     EntityManager entityManager;
 
     public List<RestaurantEntity> restaurantsByRating() {
-        return entityManager.createNamedQuery("Restaurants.fetchAll").getResultList();
+        return entityManager.createNamedQuery("getAllRestaurants").getResultList();
     }
 
     public List<RestaurantEntity> restaurantsByName(String name) {
-        return entityManager.createNamedQuery("Restaurants.getByName").setParameter("name", "%" + name.toLowerCase() + "%").getResultList();
+        return entityManager.createNamedQuery("getRestaurantsByName").setParameter("name", "%" + name.toLowerCase() + "%").getResultList();
     }
 
     public RestaurantEntity getRestaurantByID(String restaurantId) {
         try {
-            return entityManager.createNamedQuery("Restaurants.getById", RestaurantEntity.class).setParameter("id", restaurantId).getSingleResult();
+            return entityManager.createNamedQuery("getRestaurantById", RestaurantEntity.class).setParameter("id", restaurantId).getSingleResult();
         } catch (NoResultException e) {
             return null;
         }
@@ -32,7 +32,7 @@ public class RestaurantDao {
 
     public List<RestaurantEntity> restaurantByCategory(CategoryEntity categoryEntity) {
         try {
-            return entityManager.createNamedQuery("RestaurantCategoryEntity.getRestaurantByCategory", RestaurantEntity.class).setParameter("category", categoryEntity).getResultList();
+            return entityManager.createNamedQuery("getRestaurantByCategory", RestaurantEntity.class).setParameter("category", categoryEntity).getResultList();
         } catch (NoResultException e) {
             return null;
         }

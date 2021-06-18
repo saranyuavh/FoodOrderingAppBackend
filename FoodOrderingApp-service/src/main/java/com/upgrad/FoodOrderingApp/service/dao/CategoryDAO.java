@@ -17,7 +17,7 @@ public class CategoryDao {
 
     public List<CategoryEntity> getAllCategories() {
         try {
-            return entityManager.createNamedQuery("Category.fetchAllCategories", CategoryEntity.class).getResultList();
+            return entityManager.createNamedQuery("getAllCategories", CategoryEntity.class).getResultList();
         } catch (NoResultException nre) {
             return null;
         }
@@ -25,9 +25,9 @@ public class CategoryDao {
 
     public CategoryEntity getCategoryById(final String categoryId) {
         try {
-            return entityManager.createNamedQuery("Category.fetchCategoryItem", CategoryEntity.class)
-                .setParameter("categoryId", categoryId)
-                .getSingleResult();
+            return entityManager.createNamedQuery("getCategoryItem", CategoryEntity.class)
+                    .setParameter("categoryId", categoryId)
+                    .getSingleResult();
         } catch (NoResultException nre) {
             return null;
         }
@@ -35,7 +35,7 @@ public class CategoryDao {
 
     public List<CategoryEntity> getCategoriesByRestaurant(RestaurantEntity restaurantEntity) {
         try {
-            return entityManager.createNamedQuery("RestaurantCategoryEntity.getCategoryByRestaurant", CategoryEntity.class).setParameter("restaurant", restaurantEntity).getResultList();
+            return entityManager.createNamedQuery("getCategoryByRestaurant", CategoryEntity.class).setParameter("restaurant", restaurantEntity).getResultList();
         } catch (NoResultException nre) {
             return null;
         }

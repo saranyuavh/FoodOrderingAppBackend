@@ -27,10 +27,10 @@ public class ItemController {
 
     @CrossOrigin
     @RequestMapping(method = RequestMethod.GET,
-        path = "/item/restaurant/{restaurant_id}",
-        produces = MediaType.APPLICATION_JSON_VALUE)
+            path = "/item/restaurant/{restaurant_id}",
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ItemListResponse> getItemsByPopularity(@PathVariable("restaurant_id") final String restaurantId)
-        throws RestaurantNotFoundException {
+            throws RestaurantNotFoundException {
 
         RestaurantEntity restaurantEntity = restaurantService.restaurantByUUID(restaurantId);
 
@@ -42,10 +42,10 @@ public class ItemController {
         for (ItemEntity itemEntity : itemList) {
             if (count < 5) {
                 ItemList items = new ItemList()
-                    .id(UUID.fromString(itemEntity.getUuid()))
-                    .itemName(itemEntity.getItemName())
-                    .price(itemEntity.getPrice())
-                    .itemType(ItemList.ItemTypeEnum.fromValue(itemEntity.getType().getValue()));
+                        .id(UUID.fromString(itemEntity.getUuid()))
+                        .itemName(itemEntity.getItemName())
+                        .price(itemEntity.getPrice())
+                        .itemType(ItemList.ItemTypeEnum.fromValue(itemEntity.getType().getValue()));
                 itemListResponse.add(items);
                 count = count + 1;
             } else {

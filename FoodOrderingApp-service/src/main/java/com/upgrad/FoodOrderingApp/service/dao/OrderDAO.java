@@ -17,7 +17,7 @@ public class OrderDao {
     EntityManager entityManager;
 
     public List<OrderEntity> getOrdersForCustomer(final String customerId) {
-        return entityManager.createNamedQuery("Orders.ByCustomer", OrderEntity.class).setParameter("customerId", customerId).getResultList();
+        return entityManager.createNamedQuery("getOrdersByCustomer", OrderEntity.class).setParameter("customerId", customerId).getResultList();
     }
 
     public OrderEntity saveOrder(OrderEntity orderEntity) {
@@ -33,8 +33,8 @@ public class OrderDao {
 
     public List<OrderEntity> getOrdersByRestaurant(RestaurantEntity restaurant) {
         try {
-            return entityManager.createNamedQuery("fetchOrdersByRestaurant", OrderEntity.class)
-                .setParameter("restaurant", restaurant).getResultList();
+            return entityManager.createNamedQuery("getOrdersByRestaurant", OrderEntity.class)
+                    .setParameter("restaurant", restaurant).getResultList();
         } catch (NoResultException nre) {
             System.out.printf("GetOrderRestaurant");
             return null;

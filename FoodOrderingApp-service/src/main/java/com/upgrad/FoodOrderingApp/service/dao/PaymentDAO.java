@@ -15,14 +15,14 @@ public class PaymentDao {
     EntityManager entityManager;
 
     public List<PaymentEntity> getAllPaymentMethods() {
-        return entityManager.createNamedQuery("PaymentModes.All", PaymentEntity.class).getResultList();
+        return entityManager.createNamedQuery("getAllPaymentModes", PaymentEntity.class).getResultList();
     }
 
     public PaymentEntity getPaymentByUUID(String uuid) {
         try {
-            return entityManager.createNamedQuery("PaymentModes.getById", PaymentEntity.class)
-                .setParameter("uuid", uuid)
-                .getSingleResult();
+            return entityManager.createNamedQuery("getPaymentModeById", PaymentEntity.class)
+                    .setParameter("uuid", uuid)
+                    .getSingleResult();
         } catch (NoResultException nre) {
             return null;
         }

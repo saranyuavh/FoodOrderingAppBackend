@@ -14,9 +14,9 @@ import java.util.Set;
 @Entity
 @Table(name = "restaurant")
 @NamedQueries({
-    @NamedQuery(name = "Restaurants.fetchAll", query = "SELECT r FROM RestaurantEntity r ORDER BY r.customerRating DESC"),
-    @NamedQuery(name = "Restaurants.getByName", query = "SELECT r FROM RestaurantEntity r WHERE LOWER(r.restaurantName) LIKE :name ORDER BY r.restaurantName"),
-    @NamedQuery(name = "Restaurants.getById", query = "SELECT r FROM RestaurantEntity r WHERE r.uuid=:id")
+        @NamedQuery(name = "getAllRestaurants", query = "SELECT r FROM RestaurantEntity r ORDER BY r.customerRating DESC"),
+        @NamedQuery(name = "getRestaurantsByName", query = "SELECT r FROM RestaurantEntity r WHERE LOWER(r.restaurantName) LIKE :name ORDER BY r.restaurantName"),
+        @NamedQuery(name = "getRestaurantById", query = "SELECT r FROM RestaurantEntity r WHERE r.uuid=:id")
 })
 public class RestaurantEntity implements Serializable {
     @Id
@@ -71,8 +71,8 @@ public class RestaurantEntity implements Serializable {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "restaurant_item",
-        joinColumns = {@JoinColumn(name = "restaurant_id")},
-        inverseJoinColumns = {@JoinColumn(name = "item_id")})
+            joinColumns = {@JoinColumn(name = "restaurant_id")},
+            inverseJoinColumns = {@JoinColumn(name = "item_id")})
     private Set<ItemEntity> items = new HashSet<ItemEntity>();
 
     public Integer getId() {

@@ -27,14 +27,14 @@ public class AddressService {
     @Transactional
     public AddressEntity saveAddress(AddressEntity addressEntity, CustomerEntity customerEntity) throws SaveAddressException {
 
-        if( addressEntity.getCity().isEmpty() ||
+        if (addressEntity.getCity().isEmpty() ||
                 addressEntity.getLocality().isEmpty() ||
                 addressEntity.getFlatBuilNo().isEmpty()
-        ){
+        ) {
             throw new SaveAddressException("SAR-001", "No field can be empty");
         }
         String regex = "^\\d{1,6}$";
-        if(!addressEntity.getPincode().matches(regex)) {
+        if (!addressEntity.getPincode().matches(regex)) {
             throw new SaveAddressException("SAR-002", "Invalid pincode");
         }
         addressEntity.setCustomer(customerEntity);
@@ -56,12 +56,12 @@ public class AddressService {
 
     public AddressEntity getAddressByUUID(String uuid, CustomerEntity customerEntity) throws AddressNotFoundException, AuthorizationFailedException {
         AddressEntity addressEntity = addressDAO.getAddressByUUID(uuid);
-        if (addressEntity ==null) {
+        if (addressEntity == null) {
             throw new AddressNotFoundException("ANF-003", "No address by this id");
         }
 
-        if (! customerEntity.hasAddress(uuid)) {
-            throw new AuthorizationFailedException("ATHR-004","You are not authorized to view/update/delete any one else's address");
+        if (!customerEntity.hasAddress(uuid)) {
+            throw new AuthorizationFailedException("ATHR-004", "You are not authorized to view/update/delete any one else's address");
         }
 
         return addressEntity;

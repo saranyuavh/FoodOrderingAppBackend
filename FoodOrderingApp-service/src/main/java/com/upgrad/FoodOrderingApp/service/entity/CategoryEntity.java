@@ -11,8 +11,8 @@ import java.util.List;
 @Entity
 @Table(name = "category")
 @NamedQueries({
-    @NamedQuery(name = "Category.fetchAllCategories", query = "SELECT c FROM CategoryEntity c order by c.categoryName"),
-    @NamedQuery(name = "Category.fetchCategoryItem", query = "SELECT ci FROM CategoryEntity ci WHERE ci.uuid=:categoryId")
+        @NamedQuery(name = "getAllCategories", query = "SELECT c FROM CategoryEntity c order by c.categoryName"),
+        @NamedQuery(name = "getCategoryItem", query = "SELECT c FROM CategoryEntity c WHERE c.uuid=:categoryId")
 })
 public class CategoryEntity implements Serializable, Comparable<CategoryEntity> {
     @Id

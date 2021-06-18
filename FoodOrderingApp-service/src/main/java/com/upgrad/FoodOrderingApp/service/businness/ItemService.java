@@ -32,16 +32,14 @@ public class ItemService {
     private OrderDao orderDao;
 
     public List<ItemEntity> getItemsByCategoryAndRestaurant(String restaurantUuid, String categoryUuid) {
-        //get Restaurant
         RestaurantEntity restaurant = restaurantDao.getRestaurantByID(restaurantUuid);
-        //get items in restaurant
         Set<ItemEntity> restaurantItems = restaurant.getItems();
 
         List<ItemEntity> filteredRestaurantItems = restaurantItems.stream().filter(restaurantItem ->
-            restaurantItem.getCategories().stream()
-                .anyMatch(categoryEntity -> categoryEntity.getUuid().equals(categoryUuid)))
-            .sorted(Comparator.comparing(ItemEntity::getItemName, String.CASE_INSENSITIVE_ORDER))
-            .collect(Collectors.toList());
+                restaurantItem.getCategories().stream()
+                        .anyMatch(categoryEntity -> categoryEntity.getUuid().equals(categoryUuid)))
+                .sorted(Comparator.comparing(ItemEntity::getItemName, String.CASE_INSENSITIVE_ORDER))
+                .collect(Collectors.toList());
         return filteredRestaurantItems;
     }
 
@@ -56,26 +54,22 @@ public class ItemService {
 
     public List<ItemEntity> getItemsByPopularity(RestaurantEntity restaurantEntity) {
 
-        // Get All items orders in a particular restaurant
         List<ItemEntity> itemEntityList = new ArrayList<>();
         for (OrderEntity orderEntity : orderDao.getOrdersByRestaurant(restaurantEntity)) {
             orderEntity.getItems().forEach(items ->
-                itemEntityList.add(items.getItem())
+                    itemEntityList.add(items.getItem())
             );
         }
 
-        // Create unsorted map of items orders by count
         Map<String, Integer> unsortedItemCountMap = new HashMap<>();
         for (ItemEntity itemEntity : itemEntityList) {
             Integer count = unsortedItemCountMap.get(itemEntity.getUuid());
             unsortedItemCountMap.put(itemEntity.getUuid(), (count == null) ? 1 : count + 1);
         }
 
-        // Convert unsorted HashMap to list for sorting
         List<Map.Entry<String, Integer>> unsortedItemCountList =
-            new LinkedList<Map.Entry<String, Integer>>(unsortedItemCountMap.entrySet());
+                new LinkedList<Map.Entry<String, Integer>>(unsortedItemCountMap.entrySet());
 
-        // Sort the list
         unsortedItemCountList.sort(new Comparator<Map.Entry<String, Integer>>() {
             public int compare(Map.Entry<String, Integer> item1,
                                Map.Entry<String, Integer> item2) {
@@ -83,10 +77,9 @@ public class ItemService {
             }
         });
 
-        // Retrieve itemEntity from database
         List<ItemEntity> sortedItemEntityList = new ArrayList<>();
         unsortedItemCountList.forEach(list ->
-            sortedItemEntityList.add(itemDao.getItemById(list.getKey()))
+                sortedItemEntityList.add(itemDao.getItemById(list.getKey()))
         );
 
         return sortedItemEntityList;

@@ -5,7 +5,7 @@ import com.upgrad.FoodOrderingApp.service.businness.CategoryService;
 import com.upgrad.FoodOrderingApp.service.businness.CustomerService;
 import com.upgrad.FoodOrderingApp.service.businness.ItemService;
 import com.upgrad.FoodOrderingApp.service.businness.RestaurantService;
-import com.upgrad.FoodOrderingApp.service.common.AppUtils;
+import com.upgrad.FoodOrderingApp.service.common.FoodOrderingUtils;
 import com.upgrad.FoodOrderingApp.service.common.UnexpectedException;
 import com.upgrad.FoodOrderingApp.service.entity.CategoryEntity;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
@@ -51,7 +51,7 @@ public class RestaurantController {
             @PathVariable("restaurant_id") final String restaurantId,
             @RequestHeader("authorization") final String authorization)
             throws RestaurantNotFoundException, AuthorizationFailedException, InvalidRatingException {
-        final String accessToken = AppUtils.getBearerAuthToken(authorization);
+        final String accessToken = FoodOrderingUtils.getBearerAuthToken(authorization);
         final CustomerEntity customerEntity = customerService.getCustomer(accessToken);
 
         RestaurantEntity restaurant = restaurantService.restaurantByUUID(restaurantId);
@@ -220,9 +220,9 @@ public class RestaurantController {
             restaurantList.add(restaurant);
         }
         restaurantList = restaurantList
-            .stream()
-            .sorted(Comparator.comparing(RestaurantList::getRestaurantName, String.CASE_INSENSITIVE_ORDER))
-            .collect(Collectors.toList());
+                .stream()
+                .sorted(Comparator.comparing(RestaurantList::getRestaurantName, String.CASE_INSENSITIVE_ORDER))
+                .collect(Collectors.toList());
         RestaurantListResponse restaurantListResponse = new RestaurantListResponse();
         restaurantListResponse.setRestaurants(restaurantList);
         return new ResponseEntity<>(restaurantListResponse, HttpStatus.OK);
@@ -282,16 +282,16 @@ public class RestaurantController {
                 itemListList.add(item);
             }
             itemListList = itemListList
-                .stream()
-                .sorted(Comparator.comparing(ItemList::getItemName, String.CASE_INSENSITIVE_ORDER))
-                .collect(Collectors.toList());
+                    .stream()
+                    .sorted(Comparator.comparing(ItemList::getItemName, String.CASE_INSENSITIVE_ORDER))
+                    .collect(Collectors.toList());
             category.setItemList(itemListList);
             categoryList.add(category);
         }
         categoryList = categoryList
-            .stream()
-            .sorted(Comparator.comparing(CategoryList::getCategoryName, String.CASE_INSENSITIVE_ORDER))
-            .collect(Collectors.toList());
+                .stream()
+                .sorted(Comparator.comparing(CategoryList::getCategoryName, String.CASE_INSENSITIVE_ORDER))
+                .collect(Collectors.toList());
         restaurant.categories(categoryList);
 
         return new ResponseEntity<RestaurantDetailsResponse>(restaurant, HttpStatus.OK);

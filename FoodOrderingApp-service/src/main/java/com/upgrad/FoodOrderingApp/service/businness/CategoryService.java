@@ -25,9 +25,7 @@ public class CategoryService {
     private RestaurantDao restaurantDao;
 
     public List<CategoryEntity> getCategoriesByRestaurant(String restaurantUuid) {
-        // Retrieve restaurantEntity from database
         RestaurantEntity restaurantEntity = restaurantDao.getRestaurantByID(restaurantUuid);
-        // Retrieve CategoryEntity List from database
         return categoryDao.getCategoriesByRestaurant(restaurantEntity);
     }
 
@@ -39,20 +37,18 @@ public class CategoryService {
     @Transactional(propagation = Propagation.REQUIRED)
     public CategoryEntity getCategoryById(String categoryId) throws CategoryNotFoundException {
 
-        if (categoryId.equals("")) { // Throw error if categoryId is empty
+        if (categoryId.equals("")) {
             throw new CategoryNotFoundException(CNF_001.getCode(), CNF_001.getDefaultMessage());
         }
 
-        // Retrieve categoryEntity from database
         CategoryEntity categoryEntity = categoryDao.getCategoryById(categoryId);
 
-        if (categoryEntity == null) { // Throw error if category not found matching categoryId
+        if (categoryEntity == null) {
             throw new CategoryNotFoundException(CNF_002.getCode(), CNF_002.getDefaultMessage());
         }
 
         return categoryEntity;
     }
-
 
 
 }

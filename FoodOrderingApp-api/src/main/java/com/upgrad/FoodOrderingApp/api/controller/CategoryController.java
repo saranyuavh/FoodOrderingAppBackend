@@ -26,25 +26,25 @@ public class CategoryController {
     @CrossOrigin
     @RequestMapping(method = RequestMethod.GET, path = "/category/{category_id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CategoryDetailsResponse> getCategoryById(
-        @PathVariable("category_id") final String categoryId) throws CategoryNotFoundException {
+            @PathVariable("category_id") final String categoryId) throws CategoryNotFoundException {
 
         CategoryEntity categoryEntity = categoryService.getCategoryById(categoryId);
 
         ArrayList<ItemList> itemList = new ArrayList<>();
 
         categoryEntity.getItems().forEach(items ->
-            itemList.add(
-                new ItemList()
-                    .id(UUID.fromString(items.getUuid()))
-                    .itemName(items.getItemName())
-                    .itemType(ItemList.ItemTypeEnum.fromValue(items.getType().getValue()))
-                    .price(items.getPrice())
-            ));
+                itemList.add(
+                        new ItemList()
+                                .id(UUID.fromString(items.getUuid()))
+                                .itemName(items.getItemName())
+                                .itemType(ItemList.ItemTypeEnum.fromValue(items.getType().getValue()))
+                                .price(items.getPrice())
+                ));
 
         CategoryDetailsResponse categoryDetailsResponse = new CategoryDetailsResponse()
-            .categoryName(categoryEntity.getCategoryName())
-            .id(UUID.fromString(categoryEntity.getUuid()))
-            .itemList(itemList);
+                .categoryName(categoryEntity.getCategoryName())
+                .id(UUID.fromString(categoryEntity.getUuid()))
+                .itemList(itemList);
 
         return new ResponseEntity<CategoryDetailsResponse>(categoryDetailsResponse, HttpStatus.OK);
     }

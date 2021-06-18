@@ -18,8 +18,8 @@ import java.util.Set;
 @Entity
 @Table(name = "orders")
 @NamedQueries({
-    @NamedQuery(name = "Orders.ByCustomer", query = "SELECT O FROM OrderEntity O WHERE O.customer.uuid = :customerId ORDER BY O.date DESC"),
-    @NamedQuery(name = "fetchOrdersByRestaurant", query = "SELECT o FROM OrderEntity o where o.restaurant =: restaurant")
+        @NamedQuery(name = "getOrdersByCustomer", query = "SELECT o FROM OrderEntity o WHERE o.customer.uuid = :customerId ORDER BY o.date DESC"),
+        @NamedQuery(name = "getOrdersByRestaurant", query = "SELECT o FROM OrderEntity o where o.restaurant =: restaurant")
 })
 public class OrderEntity implements Serializable {
     @Id

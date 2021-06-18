@@ -15,7 +15,7 @@ import java.util.Set;
 @Entity
 @Table(name = "item")
 @NamedQueries({
-    @NamedQuery(name = "ItemEntity.getItemById", query = "SELECT i FROM ItemEntity i WHERE i.uuid=:uuid")
+        @NamedQuery(name = "getItemEntityById", query = "SELECT o FROM ItemEntity o WHERE o.uuid=:uuid")
 
 })
 
@@ -49,8 +49,8 @@ public class ItemEntity implements Serializable {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "category_item",
-        joinColumns = {@JoinColumn(name = "item_id")},
-        inverseJoinColumns = {@JoinColumn(name = "category_id")})
+            joinColumns = {@JoinColumn(name = "item_id")},
+            inverseJoinColumns = {@JoinColumn(name = "category_id")})
     @ToStringExclude
     @HashCodeExclude
     @EqualsExclude

@@ -40,8 +40,6 @@ public class CustomerService {
             throw new SignUpRestrictedException("SGR-002", "Invalid email-id format!");
         }
 
-        //Question requires the passowrd to have capital letter
-        //test cases for pass, has password that has lower case letter
         regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[\\\\[#@$%&*!^\\\\] –[{}]:;',?\\/*~$^\\+=<>]).{8,20}$";
         if (!customerEntity.getPassword().matches(regex)) {
             throw new SignUpRestrictedException("SGR-004", "Weak password!");
@@ -86,12 +84,10 @@ public class CustomerService {
     }
 
 
-    //check if email is already registered
     public boolean emailExists(final String email) {
         return customerDAO.getUserByEmail(email) != null;
     }
 
-    //check if email is already registered
     public boolean contactExists(final String contact) {
         return customerDAO.getUserByContact(contact) != null;
     }
@@ -107,7 +103,6 @@ public class CustomerService {
         return customerEntity;
     }
 
-    //@javax.transaction.Transactional
     public CustomerAuthEntity validateAccessToken(final String authorizationToken) throws AuthorizationFailedException {
 
         CustomerAuthEntity customerAuthTokenEntity = customerDAO.getCustomerAuthToken(authorizationToken);
