@@ -38,5 +38,16 @@ public class AddressNotFoundException extends Exception {
         return errorMessage;
     }
 
+    public HttpStatus getHttpCode() {
+        switch(code) {
+            case "ANF-001" : return HttpStatus.NOT_FOUND;
+            case "ANF-002" : return HttpStatus.NOT_FOUND;
+            case "ANF-003" : return HttpStatus.NOT_FOUND;
+            case "ANF-004" : return HttpStatus.NOT_FOUND;
+            case "ANF-005" : return HttpStatus.NOT_FOUND;
+        }
+        return HttpStatus.NOT_FOUND;
+    }
+
 }
 

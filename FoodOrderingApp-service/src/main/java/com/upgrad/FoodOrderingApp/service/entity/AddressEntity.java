@@ -73,8 +73,6 @@ public class AddressEntity implements Serializable {
     public AddressEntity() {
     }
 
-    ;
-
     public CustomerEntity getCustomer() {
         return customer;
     }

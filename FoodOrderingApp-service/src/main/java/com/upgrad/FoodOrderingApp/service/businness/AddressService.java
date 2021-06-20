@@ -26,7 +26,6 @@ public class AddressService {
 
     @Transactional
     public AddressEntity saveAddress(AddressEntity addressEntity, CustomerEntity customerEntity) throws SaveAddressException {
-
         if (addressEntity.getCity().isEmpty() ||
                 addressEntity.getLocality().isEmpty() ||
                 addressEntity.getFlatBuilNo().isEmpty()

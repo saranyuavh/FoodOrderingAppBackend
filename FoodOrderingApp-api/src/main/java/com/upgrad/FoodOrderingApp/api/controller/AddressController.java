@@ -6,6 +6,7 @@ import com.upgrad.FoodOrderingApp.service.businness.CustomerService;
 import com.upgrad.FoodOrderingApp.service.businness.StateService;
 import com.upgrad.FoodOrderingApp.service.common.FoodOrderingConstants;
 import com.upgrad.FoodOrderingApp.service.entity.AddressEntity;
+import com.upgrad.FoodOrderingApp.service.entity.CustomerAuthEntity;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
 import com.upgrad.FoodOrderingApp.service.entity.StateEntity;
 import com.upgrad.FoodOrderingApp.service.exception.AddressNotFoundException;
@@ -63,6 +64,7 @@ public class AddressController {
         if (authEncoded.length > 1) {
             authToken = authEncoded[1];
         } else {
+
             authToken = "nonexistant";
         }
         CustomerEntity customerEntity = customerService.getCustomerByAuthToken(authToken);
@@ -102,6 +104,7 @@ public class AddressController {
         if (addressUuid.isEmpty()) {
             throw new AddressNotFoundException("ANF-005", "Address id can not be empty");
         }
+
         UUID retUUID = UUID.fromString(addressService.deleteAddress(addressEntity).getUuid());
         DeleteAddressResponse deleteAddressResponse = new DeleteAddressResponse().id(retUUID).status("ADDRESS DELETED SUCCESSFULLY");
         return new ResponseEntity<DeleteAddressResponse>(deleteAddressResponse, HttpStatus.OK);
